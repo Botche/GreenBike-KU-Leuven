@@ -1,78 +1,68 @@
 package com.example.greenbike;
 
+import android.os.Bundle;
+import android.view.Menu;
+
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.greenbike.databinding.MainScreenBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private RequestQueue requestQueue;
-    private TextView txtResponse;
+
+    private AppBarConfiguration mAppBarConfiguration;
+    private MainScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        txtResponse = (TextView)findViewById(R.id.txtResponse);
+        binding = MainScreenBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
+        setSupportActionBar(binding.appBarMain.toolbar);
+//        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+        DrawerLayout drawer = binding.drawerLayout;
+        NavigationView navigationView = binding.navView;
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home,
+                R.id.nav_bikes,
+                R.id.nav_brands,
+                R.id.nav_categories,
+                R.id.nav_materials
+        )
+                .setOpenableLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    /**
-     * Retrieve information from DB with Volley JSONRequest
-     */
-    public void theRightWayJSON(View v)
-    {
-        requestQueue = Volley.newRequestQueue( this );
-        String requestURL = "https://studev.groept.be/api/a21pt104/getAllUserRoles";
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_activity, menu);
+        return true;
+    }
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            String responseString = "";
-                            for(int index = 0; index < response.length(); index++)
-                            {
-                                JSONObject curObject = response.getJSONObject(index);
-
-                                responseString += curObject.getString( "id" ) + " : " + curObject.getString( "name" ) + "\n";
-                            }
-                            txtResponse.setText(responseString);
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e("Database", e.getMessage(), e);
-                        }
-                    }
-                },
-
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        txtResponse.setText(error.getLocalizedMessage());
-                    }
-                }
-        );
-
-        requestQueue.add(submitRequest);
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 }
