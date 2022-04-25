@@ -117,40 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         requestQueue.add(submitRequest);
 
-//        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.POST, requestURL, null,
-//                new Response.Listener<JSONArray>()
-//                {
-//                    @Override
-//                    public void onResponse(JSONArray response)
-//                    {
-//                        try {
-//                            String responseString = "";
-//                            for(int index = 0; index < response.length(); index++)
-//                            {
-//                                JSONObject curObject = response.getJSONObject(index);
-//
-//                                responseString += curObject.getString( "id" ) + " : " + curObject.getString( "name" ) + "\n";
-//                            }
-//                            //txtResponse.setText(responseString);
-//                        }
-//                        catch(JSONException e)
-//                        {
-//                            Log.e("Database", e.getMessage(), e);
-//                        }
-//                    }
-//                },
-//
-//                new Response.ErrorListener()
-//                {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error)
-//                    {
-//                        //txtResponse.setText(error.getLocalizedMessage());
-//                    }
-//                }
-//        );
-//
-//        requestQueue.add(submitRequest);
+
     }
 
 }
