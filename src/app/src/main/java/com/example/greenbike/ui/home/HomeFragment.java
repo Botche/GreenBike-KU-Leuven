@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.greenbike.R;
 import com.example.greenbike.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -33,6 +32,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+            }
+        });
+
+        final TextView textView2 = binding.textHome2;
+        homeViewModel.getTest().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView2.setText(s);
             }
         });
         return root;

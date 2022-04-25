@@ -13,25 +13,25 @@
 
     <fragment
         android:id="@+id/nav_bikes"
-        android:name="com.example.greenbike.ui.gallery.GalleryFragment"
+        android:name="com.example.greenbike.ui.bikes.BikesFragment"
         android:label="@string/menu_bikes"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_bikes" />
 
     <fragment
         android:id="@+id/nav_brands"
-        android:name="com.example.greenbike.ui.slideshow.SlideshowFragment"
+        android:name="com.example.greenbike.ui.brands.BrandsFragment"
         android:label="@string/menu_brands"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_brands" />
 
     <fragment
         android:id="@+id/nav_categories"
-        android:name="com.example.greenbike.ui.slideshow.SlideshowFragment"
+        android:name="com.example.greenbike.ui.categories.CategoriesFragment"
         android:label="@string/menu_categories"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_categories" />
 
     <fragment
         android:id="@+id/nav_materials"
-        android:name="com.example.greenbike.ui.slideshow.SlideshowFragment"
+        android:name="com.example.greenbike.ui.materials.MaterialsFragment"
         android:label="@string/menu_materials"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_materials" />
 </navigation>
