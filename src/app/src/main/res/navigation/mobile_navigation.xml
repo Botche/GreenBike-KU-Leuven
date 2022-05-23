@@ -30,6 +30,18 @@
         tools:layout="@layout/fragment_categories" />
 
     <fragment
+        android:id="@+id/nav_categories_create"
+        android:name="com.example.greenbike.ui.categories.CategoriesCreateFragment"
+        android:label="Create Categories"
+        tools:layout="@layout/fragment_categories_create" />
+
+    <fragment
+        android:id="@+id/nav_categories_edit"
+        android:name="com.example.greenbike.ui.categories.CategoriesEditFragment"
+        android:label="Create Categories"
+        tools:layout="@layout/fragment_categories_edit" />
+
+    <fragment
         android:id="@+id/nav_materials"
         android:name="com.example.greenbike.ui.materials.MaterialsFragment"
         android:label="@string/menu_materials"

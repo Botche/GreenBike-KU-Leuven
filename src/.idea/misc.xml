@@ -9,9 +9,16 @@
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_register.xml" value="0.18802083333333333" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/bike_category_item.xml" value="0.19375" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/bike_material.xml" value="0.36666666666666664" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/bike_material_item.xml" value="0.15" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_bike_material.xml" value="0.36666666666666664" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_blank.xml" value="0.36666666666666664" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_categories.xml" value="0.15" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_categories_create.xml" value="0.19375" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_categories_edit.xml" value="0.18802083333333333" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_materials.xml" value="0.19375" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_materials_create.xml" value="0.19375" />
       </map>
     </option>
   </component>
