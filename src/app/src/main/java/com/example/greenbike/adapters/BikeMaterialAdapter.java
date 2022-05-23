@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -44,13 +47,13 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.bike_material_item, parent, false);
         }
 
-        TextView bikeMaterialId = (TextView) convertView.findViewById(R.id.bikeMaterialId);
-        TextView bikeMaterialName = (TextView) convertView.findViewById(R.id.bikeMaterialName);
+        TextView bikeMaterialId = convertView.findViewById(R.id.bikeMaterialId);
+        TextView bikeMaterialName = convertView.findViewById(R.id.bikeMaterialName);
 
         bikeMaterialId.setText(item.getId());
         bikeMaterialName.setText(item.getName());
 
-        Button deleteButton = (Button) convertView.findViewById(R.id.deleteBikeMaterialButton);
+        Button deleteButton = convertView.findViewById(R.id.deleteBikeMaterialButton);
         deleteButton.setTag(position);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +62,7 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
             }
         });
 
-        Button editButton = (Button) convertView.findViewById(R.id.editBikeMaterialButton);
+        Button editButton = convertView.findViewById(R.id.editBikeMaterialButton);
         editButton.setTag(position);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,14 +76,14 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
 
     private void onDeleteBikeMaterial(View v, String id) {
         Activity origin = (Activity)this.getContext();
-        Intent intent = new Intent(origin, MaterialsFragment.class);
 
         String requestURL = Constatants.BASE_URL + "/deleteBikeMaterial";
 
         StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                origin.startActivity(intent);
+                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
+                navController.navigate(R.id.nav_materials);
             }
         }, new Response.ErrorListener() {
             @Override
