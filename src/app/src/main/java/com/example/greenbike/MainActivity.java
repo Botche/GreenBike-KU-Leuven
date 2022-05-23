@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_bikes,
                 R.id.nav_brands,
                 R.id.nav_categories,
-                R.id.nav_materials,
-                R.id.nav_materials_create
+                R.id.nav_materials
         )
                 .setOpenableLayout(drawer)
                 .build();
