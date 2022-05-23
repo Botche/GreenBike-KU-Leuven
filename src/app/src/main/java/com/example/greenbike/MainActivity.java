@@ -11,18 +11,41 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.greenbike.common.Global;
+import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.models.user.User;
+import com.example.greenbike.database.models.user.UserRole;
+import com.google.gson.Gson;
 
 import com.example.greenbike.databinding.MainScreenBinding;
 
 public class MainActivity extends AppCompatActivity {
-
+  
     private AppBarConfiguration mAppBarConfiguration;
     private MainScreenBinding binding;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+      
         binding = MainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -64,5 +87,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void toView(View v)
+    {
+        Intent myIntent = new Intent(this, ListBikeMaterials.class);
+        startActivity(myIntent);
     }
 }
