@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeCategoryAdapter;
+import com.example.greenbike.common.Global;
 import com.example.greenbike.common.VolleyRequestQueue;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeCategory;
@@ -38,7 +39,6 @@ public class CategoriesFragment extends Fragment {
     private FragmentCategoriesBinding binding;
     private ArrayList<BikeCategory> allBikeCategories;
     private View root;
-    private RequestQueue requestQueue;
 
     public CategoriesFragment() {
         this.allBikeCategories = new ArrayList<BikeCategory>();
@@ -79,9 +79,6 @@ public class CategoriesFragment extends Fragment {
     private void getAllBikeCategories() {
         Activity origin = (Activity)this.getContext();
 
-        VolleyRequestQueue volleyRequestQueue = VolleyRequestQueue.getInstance(origin);
-        requestQueue = volleyRequestQueue.getRequestQueue();
-
         String requestURL = Constatants.BASE_URL + "/getAllBikeCategories";
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
@@ -120,7 +117,7 @@ public class CategoriesFragment extends Fragment {
                 }
         );
 
-        requestQueue.add(submitRequest);
+        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     private void fillFragments() {
