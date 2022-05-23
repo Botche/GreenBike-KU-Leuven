@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.greenbike.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_bikes"
+        android:name="com.example.greenbike.ui.bikes.BikesFragment"
+        android:label="@string/menu_bikes"
+        tools:layout="@layout/fragment_bikes" />
+
+    <fragment
+        android:id="@+id/nav_brands"
+        android:name="com.example.greenbike.ui.brands.BrandsFragment"
+        android:label="@string/menu_brands"
+        tools:layout="@layout/fragment_brands" />
+
+    <fragment
+        android:id="@+id/nav_categories"
+        android:name="com.example.greenbike.ui.categories.CategoriesFragment"
+        android:label="@string/menu_categories"
+        tools:layout="@layout/fragment_categories" />
+
+    <fragment
+        android:id="@+id/nav_materials"
+        android:name="com.example.greenbike.ui.materials.MaterialsFragment"
+        android:label="@string/menu_materials"
+        tools:layout="@layout/fragment_materials" />
+</navigation>
