@@ -15,6 +15,9 @@
     <string name="menu_materials">Materials</string>
     <string name="list_of_bike_materials">List of bike materials</string>
     <string name="delete">Delete</string>
-    <string name="edit">Edit</string>
     <string name="steal">Steal</string>
+    <string name="edit_bike_material">Edit Bike Material</string>
+    <string name="edit">Edit</string>
+    <string name="name">Name</string>
+    <string name="logout">Logout</string>
 </resources>

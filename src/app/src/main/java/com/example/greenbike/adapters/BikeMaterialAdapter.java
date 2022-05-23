@@ -3,7 +3,7 @@ package com.example.greenbike.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.greenbike.EditBikeMaterial;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeMaterial;
@@ -30,7 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.greenbike.R;
-import com.example.greenbike.ui.materials.MaterialsFragment;
 
 
 public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
@@ -108,9 +106,12 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
 
     private void onEditBikeMaterial(View v, BikeMaterial bikeMaterial) {
         Activity origin = (Activity)this.getContext();
-        Intent intent = new Intent(this.getContext(), EditBikeMaterial.class);
 
-        intent.putExtra("BikeMaterial", bikeMaterial);
-        origin.startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("BikeMaterial", bikeMaterial);
+
+        NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
+        navController.navigate(R.id.nav_materials_edit, bundle);
+
     }
 }

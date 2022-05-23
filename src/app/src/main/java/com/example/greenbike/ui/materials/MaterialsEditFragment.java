@@ -23,41 +23,50 @@ import com.example.greenbike.R;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
-import com.example.greenbike.databinding.FragmentMaterialsCreateBinding;
+import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.databinding.FragmentMaterialsEditBinding;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-public class MaterialsCreateFragment extends Fragment {
-    private FragmentMaterialsCreateBinding binding;
+public class MaterialsEditFragment extends Fragment {
+    private FragmentMaterialsEditBinding binding;
 
     private EditText nameInput;
+    private BikeMaterial bikeMaterial;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentMaterialsCreateBinding.inflate(inflater, container, false);
+        binding = FragmentMaterialsEditBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        this.nameInput = root.findViewById(R.id.name);
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            this.bikeMaterial = (BikeMaterial) bundle.getSerializable("BikeMaterial");
+        }
 
-        Button createButton = root.findViewById(R.id.createBikeMaterialButton);
-        createButton.setTag(root);
-        createButton.setOnClickListener(new View.OnClickListener() {
+        this.nameInput = root.findViewById(R.id.editActivityBikeMaterialName);
+        this.nameInput.setText(bikeMaterial.getName());
+
+        Button editButton = root.findViewById(R.id.editActivityBikeMaterialButton);
+        editButton.setTag(root);
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MaterialsCreateFragment.this.onCreate(v);
+                MaterialsEditFragment.this.onEdit(v);
             }
         });
 
         return root;
     }
 
-    public void onCreate(View v)
+
+    public void onEdit(View v)
     {
         Activity origin = (Activity)this.getContext();
 
         String name = this.nameInput.getText().toString();
+        String id = this.bikeMaterial.getId();
 
         if (Validator.isBikeMaterialInvalid(name)) {
             Toast.makeText(origin, "Some fields are empty!", Toast.LENGTH_SHORT).show();
@@ -65,7 +74,7 @@ public class MaterialsCreateFragment extends Fragment {
             return;
         }
 
-        String requestURL = Constatants.BASE_URL + "/createBikeMaterial";
+        String requestURL = Constatants.BASE_URL + "/editBikeMaterial";
 
         StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
             @Override
@@ -78,15 +87,14 @@ public class MaterialsCreateFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 error.getMessage();
 
-                Toast.makeText(origin, "Create bike material faild!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, "Edit bike material failed!", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                UUID id = UUID.randomUUID();
 
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", id.toString());
+                params.put("id", id);
                 params.put("name", name);
 
                 return params;

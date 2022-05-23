@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditBikeMaterial">
+    tools:context=".ui.materials.MaterialsEditFragment">
 
     <LinearLayout
         android:id="@+id/editBikeMaterialHeadingLayout"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:textColor="@color/black"
             android:gravity="center"
-            android:text="Edit Bike Material"
+            android:text="@string/edit_bike_material"
             android:textSize="30sp" />
     </LinearLayout>
 
@@ -53,7 +53,7 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:inputType="text"
-            android:hint="Name" />
+            android:hint="@string/name" />
     </LinearLayout>
 
 
@@ -77,8 +77,7 @@
             android:id="@+id/editActivityBikeMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Edit"
-            android:onClick="onEdit"
+            android:text="@string/edit"
             android:textSize="16sp" />
     </LinearLayout>
 

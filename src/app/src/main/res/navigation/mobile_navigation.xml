@@ -41,4 +41,10 @@
         android:label="Create material"
         tools:layout="@layout/fragment_materials_create" />
 
+    <fragment
+        android:id="@+id/nav_materials_edit"
+        android:name="com.example.greenbike.ui.materials.MaterialsEditFragment"
+        android:label="Edit material"
+        tools:layout="@layout/fragment_materials_edit" />
+
 </navigation>

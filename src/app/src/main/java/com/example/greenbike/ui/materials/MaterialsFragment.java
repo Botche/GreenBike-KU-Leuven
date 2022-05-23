@@ -78,6 +78,7 @@ public class MaterialsFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
+                            MaterialsFragment.this.allBikeMaterials.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
