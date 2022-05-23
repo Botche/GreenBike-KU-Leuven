@@ -14,14 +14,11 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.greenbike.EditBikeMaterial;
-import com.example.greenbike.ListBikeMaterials;
-import com.example.greenbike.MainActivity;
+import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeMaterial;
 
@@ -30,10 +27,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.greenbike.R;
+import com.example.greenbike.ui.materials.MaterialsFragment;
 
 
 public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
-    private RequestQueue requestQueue;
 
     public BikeMaterialAdapter(Context context, ArrayList<BikeMaterial> items) {
         super(context, 0, items);
@@ -44,7 +41,7 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
         BikeMaterial item = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.bike_material, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.bike_material_item, parent, false);
         }
 
         TextView bikeMaterialId = (TextView) convertView.findViewById(R.id.bikeMaterialId);
@@ -76,9 +73,8 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
 
     private void onDeleteBikeMaterial(View v, String id) {
         Activity origin = (Activity)this.getContext();
-        Intent intent = new Intent(origin, ListBikeMaterials.class);
+        Intent intent = new Intent(origin, MaterialsFragment.class);
 
-        requestQueue = Volley.newRequestQueue( this.getContext() );
         String requestURL = Constatants.BASE_URL + "/deleteBikeMaterial";
 
         StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
@@ -104,7 +100,7 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
             }
         };
 
-        requestQueue.add(submitRequest);
+        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     private void onEditBikeMaterial(View v, BikeMaterial bikeMaterial) {

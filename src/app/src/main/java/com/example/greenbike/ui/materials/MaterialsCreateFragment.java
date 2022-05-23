@@ -1,7 +1,6 @@
 package com.example.greenbike.ui.materials;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.greenbike.ListBikeMaterials;
 import com.example.greenbike.R;
+import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
+import com.example.greenbike.common.VolleyRequestQueue;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.databinding.FragmentMaterialsCreateBinding;
 
@@ -34,8 +34,6 @@ import java.util.UUID;
 
 public class MaterialsCreateFragment extends Fragment {
     private FragmentMaterialsCreateBinding binding;
-
-    private RequestQueue requestQueue;
 
     private EditText nameInput;
 
@@ -70,7 +68,6 @@ public class MaterialsCreateFragment extends Fragment {
             return;
         }
 
-        requestQueue = Volley.newRequestQueue(origin);
         String requestURL = Constatants.BASE_URL + "/createBikeMaterial";
 
         StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
@@ -99,7 +96,7 @@ public class MaterialsCreateFragment extends Fragment {
             }
         };
 
-        requestQueue.add(submitRequest);
+        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.ui.materials.MaterialsFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class EditBikeMaterial extends AppCompatActivity {
         StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent myIntent = new Intent(EditBikeMaterial.this, ListBikeMaterials.class);
+                Intent myIntent = new Intent(EditBikeMaterial.this, MaterialsFragment.class);
                 startActivity(myIntent);
             }
         }, new Response.ErrorListener() {

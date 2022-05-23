@@ -13,4 +13,8 @@
     <string name="menu_brands">Brands</string>
     <string name="menu_categories">Categories</string>
     <string name="menu_materials">Materials</string>
+    <string name="list_of_bike_materials">List of bike materials</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="steal">Steal</string>
 </resources>
