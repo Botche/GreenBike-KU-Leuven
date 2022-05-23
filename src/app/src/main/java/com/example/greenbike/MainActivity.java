@@ -1,8 +1,12 @@
 package com.example.greenbike;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,9 +27,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      
+
         binding = MainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        View root = binding.getRoot();
+        TextView registerLink = root.findViewById(R.id.registerLink);
+        registerLink.setTag(root);
+        registerLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(myIntent);
+            }
+        });
 
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;

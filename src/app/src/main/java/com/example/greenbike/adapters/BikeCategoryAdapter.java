@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeCategory;
@@ -74,9 +75,7 @@ public class BikeCategoryAdapter extends ArrayAdapter<BikeCategory> {
     private void onDeleteBikeCategory(View v, String id) {
         Activity origin = (Activity)this.getContext();
 
-        String requestURL = Constatants.BASE_URL + "/deleteBikeCategory";
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_CATEGORY_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -85,13 +84,11 @@ public class BikeCategoryAdapter extends ArrayAdapter<BikeCategory> {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.getMessage();
-
-                Toast.makeText(origin, "Delete bike category faild!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, ExceptionMessages.DELETE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("id", id);

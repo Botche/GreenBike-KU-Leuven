@@ -20,11 +20,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeBrand;
-import com.example.greenbike.database.models.bike.BikeMaterial;
 import com.example.greenbike.databinding.FragmentBrandsEditBinding;
 
 import java.util.HashMap;
@@ -70,14 +70,12 @@ public class BrandsEditFragment extends Fragment {
         String id = this.bikeBrand.getId();
 
         if (Validator.isBikeMaterialInvalid(name)) {
-            Toast.makeText(origin, "Some fields are empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-        String requestURL = Constatants.BASE_URL + "/editBikeBrand";
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_BRAND_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -86,13 +84,11 @@ public class BrandsEditFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.getMessage();
-
-                Toast.makeText(origin, "Edit bike brand failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, ExceptionMessages.EDIT_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id);

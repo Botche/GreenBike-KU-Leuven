@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeBrandAdapter;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeBrand;
@@ -41,10 +42,6 @@ public class BrandsFragment extends Fragment {
 
     public BrandsFragment() {
         this.allBikeBrands = new ArrayList<BikeBrand>();
-    }
-
-    public BrandsFragment(ArrayList<BikeBrand> bikeBrands) {
-        this.allBikeBrands = bikeBrands;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -77,9 +74,7 @@ public class BrandsFragment extends Fragment {
     private void getAllBikeMaterials() {
         Activity origin = (Activity)this.getContext();
 
-        String requestURL = Constatants.BASE_URL + "/getAllBikeBrands";
-
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BRANDS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -101,7 +96,7 @@ public class BrandsFragment extends Fragment {
                         }
                         catch(JSONException e)
                         {
-                            Log.e("Database", e.getMessage(), e);
+                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -110,7 +105,7 @@ public class BrandsFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(origin, ExceptionMessages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

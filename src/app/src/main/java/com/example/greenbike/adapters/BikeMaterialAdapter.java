@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeMaterial;
@@ -75,9 +76,7 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
     private void onDeleteBikeMaterial(View v, String id) {
         Activity origin = (Activity)this.getContext();
 
-        String requestURL = Constatants.BASE_URL + "/deleteBikeMaterial";
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_MATERIAL_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -86,13 +85,11 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.getMessage();
-
-                Toast.makeText(origin, "Delete bike material failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, ExceptionMessages.DELETE_MATERIAL_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("id", id);

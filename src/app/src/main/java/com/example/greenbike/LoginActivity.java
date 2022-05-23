@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.ExecutorDelivery;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.user.User;
@@ -27,10 +30,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class LoginActivity extends AppCompatActivity {
-    private RequestQueue requestQueue;
-    private ArrayList<UserRole> userRoles = new ArrayList<UserRole>();
+    private final ArrayList<UserRole> userRoles = new ArrayList<UserRole>();
 
     private EditText emailInput;
     private EditText passwordInput;
@@ -40,11 +45,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.emailInput = (EditText)findViewById(R.id.email);
-        this.passwordInput = (EditText)findViewById(R.id.password);
-
+        this.emailInput = findViewById(R.id.email);
+        this.passwordInput = findViewById(R.id.password);
 
         this.getUserRoles();
+
+        TextView registerLink = findViewById(R.id.registerLink);
+        registerLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     public void onLoginUser(View v) {
@@ -53,15 +66,13 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean isInvalid = email.isEmpty() || password.isEmpty();
         if(isInvalid) {
-            Toast.makeText(LoginActivity.this, "Some fields are empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-        requestQueue = Volley.newRequestQueue( this );
-        String requestURL = Constatants.BASE_URL + "/login/" + email;
-
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+        String requestUrl = String.format(Constatants.LOGIN_USER, email);
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestUrl, null,
             new Response.Listener<JSONArray>()
             {
                 @Override
@@ -71,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         boolean isInvalid = response.length() != 1;
 
                         if (isInvalid) {
-                            Toast.makeText(LoginActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;
                         }
@@ -81,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                         String userPassword = jsonObject.getString("password");
                         isInvalid = userPassword.equals(password) == false;
                         if (isInvalid) {
-                            Toast.makeText(LoginActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;
                         }
@@ -105,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     catch(JSONException e)
                     {
-                        Log.e("Database", e.getMessage(), e);
+                        Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
                 }
             },
@@ -114,21 +125,17 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error)
                 {
-                    Toast.makeText(LoginActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
                 }
             }
         );
 
-        requestQueue.add(submitRequest);
+        Global.requestQueue.addToRequestQueue(submitRequest);
 
     }
 
     private void getUserRoles() {
-
-        requestQueue = Volley.newRequestQueue( this );
-        String requestURL = Constatants.BASE_URL + "/getAllUserRoles";
-
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_ALL_USER_ROLES, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -147,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         catch(JSONException e)
                         {
-                            Log.e("Database", e.getMessage(), e);
+                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -156,11 +163,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(LoginActivity.this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
 
-        requestQueue.add(submitRequest);
+        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 }

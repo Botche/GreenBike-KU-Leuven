@@ -18,8 +18,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.AuthFailureError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.greenbike.common.ExceptionMessages;
+import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.databinding.MainScreenBinding;
+
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -30,8 +34,6 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    private RequestQueue requestQueue;
-
     private EditText emailInput;
     private EditText passwordInput;
     private EditText repeatPasswordInput;
@@ -41,9 +43,18 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        this.emailInput = (EditText)findViewById(R.id.email);
-        this.passwordInput = (EditText)findViewById(R.id.password);
-        this.repeatPasswordInput = (EditText)findViewById(R.id.repeatPassword);
+        this.emailInput = findViewById(R.id.email);
+        this.passwordInput = findViewById(R.id.password);
+        this.repeatPasswordInput = findViewById(R.id.repeatPassword);
+
+        TextView loginLink = findViewById(R.id.loginLink);
+        loginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     public void onRegisterUser(View v)
@@ -54,14 +65,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         boolean isInvalid = email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty();
         if(isInvalid) {
-            Toast.makeText(RegisterActivity.this, "Some fields are empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
 
         isInvalid = Validator.isEmailValid(email) == false;
         if (isInvalid) {
-            Toast.makeText(RegisterActivity.this, "Email is not valid!",
+            Toast.makeText(RegisterActivity.this, ExceptionMessages.NOT_VALID_EMAIL,
                     Toast.LENGTH_SHORT).show();
 
             return;
@@ -69,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         isInvalid = password.length() <= 3;
         if (isInvalid) {
-            Toast.makeText(RegisterActivity.this, "Password should be longer than 3 symbols!",
+            Toast.makeText(RegisterActivity.this, ExceptionMessages.PASSWORD_TOO_SMALL,
                     Toast.LENGTH_SHORT).show();
 
             return;
@@ -77,17 +88,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         isInvalid = password.equals(repeatPassword) == false;
         if (isInvalid) {
-            Toast.makeText(RegisterActivity.this, "Password should match repeat password!",
+            Toast.makeText(RegisterActivity.this, ExceptionMessages.PASSWORDS_DID_NOT_MATCH,
                     Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-
-        requestQueue = Volley.newRequestQueue( this );
-        String requestURL = Constatants.BASE_URL + "/register";
-
-        StringRequest  submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.REGISTER_USER,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -96,28 +103,24 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.getMessage();
-
-                Toast.makeText(RegisterActivity.this, "Register faild!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, ExceptionMessages.REGISTER_FAILED, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id.toString());
                 params.put("email", email);
-                params.put("password", email);
+                params.put("password", password);
                 params.put("roleid", "a12b5beb-b42e-11ec-baa2-422590d84e63");
 
                 return params;
             }
         };
 
-        requestQueue.add(submitRequest);
-
-
+        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
 }

@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeCategoryAdapter;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.VolleyRequestQueue;
 import com.example.greenbike.database.common.Constatants;
@@ -37,15 +38,11 @@ import java.util.ArrayList;
 
 public class CategoriesFragment extends Fragment {
     private FragmentCategoriesBinding binding;
-    private ArrayList<BikeCategory> allBikeCategories;
+    private final ArrayList<BikeCategory> allBikeCategories;
     private View root;
 
     public CategoriesFragment() {
         this.allBikeCategories = new ArrayList<BikeCategory>();
-    }
-
-    public CategoriesFragment(ArrayList<BikeCategory> allBikeCategories) {
-        this.allBikeCategories = allBikeCategories;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -79,9 +76,7 @@ public class CategoriesFragment extends Fragment {
     private void getAllBikeCategories() {
         Activity origin = (Activity)this.getContext();
 
-        String requestURL = Constatants.BASE_URL + "/getAllBikeCategories";
-
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_CATEGORIES_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -103,7 +98,7 @@ public class CategoriesFragment extends Fragment {
                         }
                         catch(JSONException e)
                         {
-                            Log.e("Database", e.getMessage(), e);
+                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -112,7 +107,7 @@ public class CategoriesFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(origin, ExceptionMessages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

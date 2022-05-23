@@ -16,15 +16,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeMaterialAdapter;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
-import com.example.greenbike.common.VolleyRequestQueue;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeMaterial;
 import com.example.greenbike.databinding.FragmentMaterialsBinding;
@@ -38,17 +36,11 @@ import java.util.ArrayList;
 
 public class MaterialsFragment extends Fragment {
     private FragmentMaterialsBinding binding;
-    private ArrayList<BikeMaterial> allBikeMaterials;
+    private final ArrayList<BikeMaterial> allBikeMaterials;
     private View root;
-
-    private RequestQueue requestQueue;
 
     public MaterialsFragment() {
         this.allBikeMaterials = new ArrayList<BikeMaterial>();
-    }
-
-    public MaterialsFragment(ArrayList<BikeMaterial> bikeMaterials) {
-        this.allBikeMaterials = bikeMaterials;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -81,9 +73,7 @@ public class MaterialsFragment extends Fragment {
     private void getAllBikeMaterials() {
         Activity origin = (Activity)this.getContext();
 
-        String requestURL = Constatants.BASE_URL + "/getAllBikeMaterials";
-
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_MATERIALS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -105,7 +95,7 @@ public class MaterialsFragment extends Fragment {
                         }
                         catch(JSONException e)
                         {
-                            Log.e("Database", e.getMessage(), e);
+                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -114,7 +104,7 @@ public class MaterialsFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(origin, ExceptionMessages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
+import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
@@ -60,14 +61,12 @@ public class CategoriesCreateFragment extends Fragment {
         String name = this.nameInput.getText().toString();
 
         if (Validator.isBikeCategoryInvalid(name)) {
-            Toast.makeText(origin, "Some fields are empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-        String requestURL = Constatants.BASE_URL + "/createBikeCategory";
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.CREATE_CATEGORY_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -76,13 +75,11 @@ public class CategoriesCreateFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.getMessage();
-
-                Toast.makeText(origin, "Create bike category failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, ExceptionMessages.CREATE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
 
                 Map<String, String> params = new HashMap<String, String>();
