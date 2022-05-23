@@ -1,6 +1,8 @@
 package com.example.greenbike.database.models;
 
-public abstract class BaseModel {
+import java.io.Serializable;
+
+public abstract class BaseModel implements Serializable {
     private String id;
 
     protected BaseModel(String id) {

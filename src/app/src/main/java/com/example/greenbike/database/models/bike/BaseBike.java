@@ -3,6 +3,8 @@ package com.example.greenbike.database.models.bike;
 import com.example.greenbike.database.models.BaseModel;
 import com.example.greenbike.database.models.interfaces.INameable;
 
+import java.io.Serializable;
+
 public abstract class BaseBike extends BaseModel implements INameable {
     private String name;
 

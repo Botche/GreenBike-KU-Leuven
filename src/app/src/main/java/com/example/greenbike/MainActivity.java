@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toView(View v)
     {
-        Intent myIntent = new Intent(this, LoginActivity.class);
+        Intent myIntent = new Intent(this, ListBikeMaterials.class);
         startActivity(myIntent);
     }
 }

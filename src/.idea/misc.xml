@@ -3,9 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_create_bike_material.xml" value="0.36666666666666664" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_edit_bike_material.xml" value="0.15" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_list_bike_materials.xml" value="0.15" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_register.xml" value="0.18802083333333333" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/bike_material.xml" value="0.36666666666666664" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_bike_material.xml" value="0.36666666666666664" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_blank.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
