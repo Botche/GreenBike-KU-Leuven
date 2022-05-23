@@ -24,6 +24,19 @@
         tools:layout="@layout/fragment_brands" />
 
     <fragment
+        android:id="@+id/nav_brands_create"
+        android:name="com.example.greenbike.ui.brands.BrandsCreateFragment"
+        android:label="Create brand"
+        tools:layout="@layout/fragment_brands_create" />
+
+    <fragment
+        android:id="@+id/nav_brands_edit"
+        android:name="com.example.greenbike.ui.brands.BrandsEditFragment"
+        android:label="Edit brand"
+        tools:layout="@layout/fragment_brands_edit" />
+
+
+    <fragment
         android:id="@+id/nav_categories"
         android:name="com.example.greenbike.ui.categories.CategoriesFragment"
         android:label="@string/menu_categories"

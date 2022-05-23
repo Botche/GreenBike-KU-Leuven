@@ -1,4 +1,4 @@
-package com.example.greenbike.ui.materials;
+package com.example.greenbike.ui.brands;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,41 +23,51 @@ import com.example.greenbike.R;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
-import com.example.greenbike.databinding.FragmentMaterialsCreateBinding;
+import com.example.greenbike.database.models.bike.BikeBrand;
+import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.databinding.FragmentBrandsEditBinding;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-public class MaterialsCreateFragment extends Fragment {
-    private FragmentMaterialsCreateBinding binding;
+public class BrandsEditFragment extends Fragment {
+    private FragmentBrandsEditBinding binding;
 
     private EditText nameInput;
+    private BikeBrand bikeBrand;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentMaterialsCreateBinding.inflate(inflater, container, false);
+        binding = FragmentBrandsEditBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        this.nameInput = root.findViewById(R.id.name);
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            this.bikeBrand = (BikeBrand) bundle.getSerializable("BikeBrand");
+        }
 
-        Button createButton = root.findViewById(R.id.createBikeMaterialButton);
-        createButton.setTag(root);
-        createButton.setOnClickListener(new View.OnClickListener() {
+        this.nameInput = root.findViewById(R.id.editActivityBikeBrandName);
+        this.nameInput.setText(bikeBrand.getName());
+
+        Button editButton = root.findViewById(R.id.editActivityBrandButton);
+        editButton.setTag(root);
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MaterialsCreateFragment.this.onCreate(v);
+                BrandsEditFragment.this.onEdit(v);
             }
         });
 
         return root;
     }
 
-    public void onCreate(View v)
+
+    public void onEdit(View v)
     {
         Activity origin = (Activity)this.getContext();
 
         String name = this.nameInput.getText().toString();
+        String id = this.bikeBrand.getId();
 
         if (Validator.isBikeMaterialInvalid(name)) {
             Toast.makeText(origin, "Some fields are empty!", Toast.LENGTH_SHORT).show();
@@ -65,28 +75,27 @@ public class MaterialsCreateFragment extends Fragment {
             return;
         }
 
-        String requestURL = Constatants.BASE_URL + "/createBikeMaterial";
+        String requestURL = Constatants.BASE_URL + "/editBikeBrand";
 
         StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_materials);
+                navController.navigate(R.id.nav_brands);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.getMessage();
 
-                Toast.makeText(origin, "Create bike material failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, "Edit bike brand failed!", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                UUID id = UUID.randomUUID();
 
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", id.toString());
+                params.put("id", id);
                 params.put("name", name);
 
                 return params;
