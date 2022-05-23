@@ -1,4 +1,4 @@
-package com.example.greenbike.ui.materials;
+package com.example.greenbike.ui.brands;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,30 +23,31 @@ import com.example.greenbike.R;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.databinding.FragmentBrandsCreateBinding;
 import com.example.greenbike.databinding.FragmentMaterialsCreateBinding;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class MaterialsCreateFragment extends Fragment {
-    private FragmentMaterialsCreateBinding binding;
+public class BrandsCreateFragment extends Fragment {
+    private FragmentBrandsCreateBinding binding;
 
     private EditText nameInput;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentMaterialsCreateBinding.inflate(inflater, container, false);
+        binding = FragmentBrandsCreateBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         this.nameInput = root.findViewById(R.id.name);
 
-        Button createButton = root.findViewById(R.id.createBikeMaterialButton);
+        Button createButton = root.findViewById(R.id.createBikeBrandButton);
         createButton.setTag(root);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MaterialsCreateFragment.this.onCreate(v);
+                BrandsCreateFragment.this.onCreate(v);
             }
         });
 
@@ -65,20 +66,20 @@ public class MaterialsCreateFragment extends Fragment {
             return;
         }
 
-        String requestURL = Constatants.BASE_URL + "/createBikeMaterial";
+        String requestURL = Constatants.BASE_URL + "/createBikeBrand";
 
         StringRequest submitRequest = new StringRequest (Request.Method.POST, requestURL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_materials);
+                navController.navigate(R.id.nav_brands);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.getMessage();
 
-                Toast.makeText(origin, "Create bike material failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, "Create bike brand failed!", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

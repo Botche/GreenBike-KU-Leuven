@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeMaterialAdapter;
+import com.example.greenbike.common.Global;
 import com.example.greenbike.common.VolleyRequestQueue;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeMaterial;
@@ -80,9 +81,6 @@ public class MaterialsFragment extends Fragment {
     private void getAllBikeMaterials() {
         Activity origin = (Activity)this.getContext();
 
-        VolleyRequestQueue volleyRequestQueue = VolleyRequestQueue.getInstance(origin);
-        requestQueue = volleyRequestQueue.getRequestQueue();
-
         String requestURL = Constatants.BASE_URL + "/getAllBikeMaterials";
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
@@ -121,7 +119,7 @@ public class MaterialsFragment extends Fragment {
                 }
         );
 
-        requestQueue.add(submitRequest);
+        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     private void fillFragments() {
