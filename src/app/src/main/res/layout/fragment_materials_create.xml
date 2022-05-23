@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateBikeMaterial">
+    tools:context=".ui.materials.MaterialsCreateFragment">
 
     <LinearLayout
         android:id="@+id/createBikeMaterialHeadingLayout"
@@ -56,8 +56,6 @@
             android:hint="Name" />
     </LinearLayout>
 
-
-
     <LinearLayout
         android:id="@+id/registerButtonLayout"
         android:layout_width="0dp"
@@ -74,11 +72,10 @@
         app:layout_constraintTop_toBottomOf="@+id/nameLayout">
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/createBikeMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Create"
-            android:onClick="onCreate"
             android:textSize="16sp" />
     </LinearLayout>
 

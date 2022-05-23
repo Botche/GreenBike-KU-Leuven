@@ -18,15 +18,15 @@
             android:name=".EditBikeMaterial"
             android:exported="false" />
         <activity
-            android:name=".CreateBikeMaterial"
-            android:exported="false" />
-        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-        <activity android:name=".MainActivity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.GreenBike.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

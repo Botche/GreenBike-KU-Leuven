@@ -1,9 +1,5 @@
 package com.example.greenbike.common;
 
-import android.widget.Toast;
-
-import com.example.greenbike.CreateBikeMaterial;
-
 import java.util.regex.Pattern;
 
 public class Validator {

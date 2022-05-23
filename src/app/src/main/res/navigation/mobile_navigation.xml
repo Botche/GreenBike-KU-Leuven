@@ -34,4 +34,11 @@
         android:name="com.example.greenbike.ui.materials.MaterialsFragment"
         android:label="@string/menu_materials"
         tools:layout="@layout/fragment_materials" />
+
+    <fragment
+        android:id="@+id/nav_materials_create"
+        android:name="com.example.greenbike.ui.materials.MaterialsCreateFragment"
+        android:label="Create material"
+        tools:layout="@layout/fragment_materials_create" />
+
 </navigation>
