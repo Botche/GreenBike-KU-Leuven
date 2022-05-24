@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -60,7 +59,7 @@ public class CategoriesCreateFragment extends Fragment {
 
         String name = this.nameInput.getText().toString();
 
-        if (Validator.isEmptyOrNull(name)) {
+        if (Validator.isNullOrEmpty(name)) {
             Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;

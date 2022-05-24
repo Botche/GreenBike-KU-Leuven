@@ -9,7 +9,7 @@ public class Validator {
         return Pattern.compile("^(.+)@(.+)\\.(.+)$").matcher(email).matches();
     }
 
-    public static boolean isEmptyOrNull(String name) {
+    public static boolean isNullOrEmpty(String name) {
         boolean isInvalid = name == null || name.isEmpty();
 
         return isInvalid;
