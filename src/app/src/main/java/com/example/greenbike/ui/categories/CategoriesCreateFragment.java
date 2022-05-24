@@ -60,7 +60,7 @@ public class CategoriesCreateFragment extends Fragment {
 
         String name = this.nameInput.getText().toString();
 
-        if (Validator.isBikeCategoryInvalid(name)) {
+        if (Validator.isEmptyOrNull(name)) {
             Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;

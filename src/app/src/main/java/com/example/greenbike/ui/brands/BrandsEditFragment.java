@@ -69,7 +69,7 @@ public class BrandsEditFragment extends Fragment {
         String name = this.nameInput.getText().toString();
         String id = this.bikeBrand.getId();
 
-        if (Validator.isBikeBrandInvalid(name)) {
+        if (Validator.isEmptyOrNull(name)) {
             Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;

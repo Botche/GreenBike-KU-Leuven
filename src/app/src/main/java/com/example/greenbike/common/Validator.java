@@ -9,20 +9,8 @@ public class Validator {
         return Pattern.compile("^(.+)@(.+)\\.(.+)$").matcher(email).matches();
     }
 
-    public static boolean isBikeMaterialInvalid(String name) {
-        boolean isInvalid = name.isEmpty();
-
-        return isInvalid;
-    }
-
-    public static boolean isBikeCategoryInvalid(String name) {
-        boolean isInvalid = name.isEmpty();
-
-        return isInvalid;
-    }
-
-    public static boolean isBikeBrandInvalid(String name) {
-        boolean isInvalid = name.isEmpty();
+    public static boolean isEmptyOrNull(String name) {
+        boolean isInvalid = name == null || name.isEmpty();
 
         return isInvalid;
     }

@@ -69,7 +69,7 @@ public class MaterialsEditFragment extends Fragment {
         String name = this.nameInput.getText().toString();
         String id = this.bikeMaterial.getId();
 
-        if (Validator.isBikeMaterialInvalid(name)) {
+        if (Validator.isEmptyOrNull(name)) {
             Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
