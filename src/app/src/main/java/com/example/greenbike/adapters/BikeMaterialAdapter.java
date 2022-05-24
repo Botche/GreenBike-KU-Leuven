@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.greenbike.R;
+import com.example.greenbike.database.services.MaterialService;
 
 
 public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
@@ -56,7 +57,7 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BikeMaterialAdapter.this.onDeleteBikeMaterial(v, item.getId());
+                MaterialService.delete(item.getId(), (Activity)BikeMaterialAdapter.this.getContext());
             }
         });
 
@@ -70,34 +71,6 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
         });
 
         return convertView;
-    }
-
-    private void onDeleteBikeMaterial(View v, String id) {
-        Activity origin = (Activity)this.getContext();
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_MATERIAL_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_materials);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.DELETE_MATERIAL_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("id", id);
-
-                return params;
-            }
-        };
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     private void onEditBikeMaterial(View v, BikeMaterial bikeMaterial) {

@@ -67,10 +67,6 @@ public class BrandService {
         Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
-    public BikeBrand getById(String id) {
-        return null;
-    }
-
     public static void getAll(View root, Integer listId, Function3<View, ArrayList<BikeBrand>, Integer, View> callBackFunction) {
         Activity origin = (Activity)root.getContext();
 

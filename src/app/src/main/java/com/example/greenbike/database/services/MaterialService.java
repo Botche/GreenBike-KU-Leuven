@@ -20,7 +20,8 @@ import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
-import com.example.greenbike.ui.categories.CategoriesFragment;
+import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.ui.materials.MaterialsFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -34,7 +35,7 @@ import java.util.UUID;
 
 import kotlin.jvm.functions.Function3;
 
-public class CategoryService {
+public class MaterialService {
     public static void create(String name, Activity origin) {
         if (Validator.isNullOrEmpty(name)) {
             Toast.makeText(origin, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
@@ -42,16 +43,16 @@ public class CategoryService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.CREATE_CATEGORY_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.CREATE_MATERIAL_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_categories);
+                navController.navigate(R.id.nav_materials);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.CREATE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, Messages.CREATE_MATERIAL_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -69,28 +70,28 @@ public class CategoryService {
         Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
-    public static void getAll(View root, Integer listId, Function3<View, ArrayList<BikeCategory>, Integer, View> callBackFunction) {
+    public static void getAll(View root, Integer listId, Function3<View, ArrayList<BikeMaterial>, Integer, View> callBackFunction) {
         Activity origin = (Activity)root.getContext();
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_CATEGORIES_URL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_MATERIALS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            ArrayList<BikeCategory> allBikeCategories = new ArrayList<>();
+                            ArrayList<BikeMaterial> allBikeMaterials = new ArrayList<>();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
 
                                 Gson gson = new Gson();
-                                BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
+                                BikeMaterial data = gson.fromJson(String.valueOf(jsonObject), BikeMaterial.class);
 
-                                allBikeCategories.add(data);
+                                allBikeMaterials.add(data);
                             }
 
-                            callBackFunction.invoke(root, allBikeCategories, listId);
+                            callBackFunction.invoke(root, allBikeMaterials, listId);
                         }
                         catch(JSONException e)
                         {
@@ -118,16 +119,16 @@ public class CategoryService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_CATEGORY_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_MATERIAL_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_categories);
+                navController.navigate(R.id.nav_materials);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.EDIT_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, Messages.EDIT_MATERIAL_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -145,16 +146,16 @@ public class CategoryService {
     }
 
     public static void delete(String id, Activity origin) {
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_CATEGORY_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_MATERIAL_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_categories);
+                navController.navigate(R.id.nav_materials);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.DELETE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, Messages.DELETE_MATERIAL_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

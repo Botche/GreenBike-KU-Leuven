@@ -1,6 +1,7 @@
 package com.example.greenbike.ui.materials;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,12 +21,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
+import com.example.greenbike.adapters.BikeBrandAdapter;
 import com.example.greenbike.adapters.BikeMaterialAdapter;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.database.services.BrandService;
+import com.example.greenbike.database.services.MaterialService;
 import com.example.greenbike.databinding.FragmentMaterialsBinding;
+import com.example.greenbike.ui.brands.BrandsFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -48,7 +54,7 @@ public class MaterialsFragment extends Fragment {
         binding = FragmentMaterialsBinding.inflate(inflater, container, false);
         this.root = binding.getRoot();
 
-        this.getAllBikeMaterials();
+        MaterialService.getAll(root, R.id.bikeMaterialList, MaterialsFragment::fillFragments);
 
         Button createButton = root.findViewById(R.id.createBikeMaterialPlusButton);
         createButton.setTag(root);
@@ -70,52 +76,13 @@ public class MaterialsFragment extends Fragment {
         binding = null;
     }
 
-    private void getAllBikeMaterials() {
-        Activity origin = (Activity)this.getContext();
+    public static View fillFragments(View root, ArrayList<BikeMaterial> allBikeMaterials, Integer bikeMaterialListId) {
+        Context context = root.getContext();
+        BikeMaterialAdapter adapter = new BikeMaterialAdapter(context, allBikeMaterials);
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_MATERIALS_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            MaterialsFragment.this.allBikeMaterials.clear();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                BikeMaterial data = gson.fromJson(String.valueOf(jsonObject), BikeMaterial.class);
-
-                                MaterialsFragment.this.allBikeMaterials.add(data);
-                            }
-
-                            MaterialsFragment.this.fillFragments();
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void fillFragments() {
-        BikeMaterialAdapter adapter = new BikeMaterialAdapter(this.getContext(), this.allBikeMaterials);
-
-        ListView listView = this.root.findViewById(R.id.bikeMaterialList);
+        ListView listView = root.findViewById(bikeMaterialListId);
         listView.setAdapter(adapter);
+
+        return root;
     }
 }
