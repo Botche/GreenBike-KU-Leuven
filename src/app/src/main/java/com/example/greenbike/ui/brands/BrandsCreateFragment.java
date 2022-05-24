@@ -18,11 +18,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.greenbike.MainActivity;
 import com.example.greenbike.R;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.services.BrandService;
 import com.example.greenbike.databinding.FragmentBrandsCreateBinding;
 
 import java.util.HashMap;
@@ -46,50 +48,11 @@ public class BrandsCreateFragment extends Fragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BrandsCreateFragment.this.onCreate(v);
+                BrandService.create(nameInput.getText().toString(), BrandsCreateFragment.this.getActivity());
             }
         });
 
         return root;
-    }
-
-    public void onCreate(View v)
-    {
-        Activity origin = (Activity)this.getContext();
-
-        String name = this.nameInput.getText().toString();
-
-        if (Validator.isNullOrEmpty(name)) {
-            Toast.makeText(origin, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
-
-            return;
-        }
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.CREATE_BRAND_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_brands);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.CREATE_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                UUID id = UUID.randomUUID();
-
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", id.toString());
-                params.put("name", name);
-
-                return params;
-            }
-        };
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     @Override

@@ -105,16 +105,14 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
             @Override
             protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
-
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
 
                 params.put("id", id.toString());
                 params.put("userid", Global.currentUser.getId());
                 params.put("bikeid", bikeId);
-                params.put("buydate", dtf.format(now));
+                params.put("buydate", Global.dateTimeFormatter.format(now));
 
                 return params;
             }
@@ -126,9 +124,39 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
     private void onRentBike(View v, String bikeId) {
         Activity origin = (Activity)this.getContext();
 
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.RENT_BIKE_URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Intent myIntent = new Intent(origin, HomeActivity.class);
+                origin.startActivity(myIntent);
+                origin.finish();
 
-        Intent myIntent = new Intent(origin, HomeActivity.class);
-        origin.startActivity(myIntent);
-        origin.finish();
+                Toast.makeText(origin, Messages.SUCCESSFULLY_RENTED_BIKE, Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(origin, Messages.RENT_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                UUID id = UUID.randomUUID();
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime nowPlusOneMonth = LocalDateTime.now().plusMonths(1);
+
+                Map<String, String> params = new HashMap<>();
+
+                params.put("id", id.toString());
+                params.put("userid", Global.currentUser.getId());
+                params.put("bikeid", bikeId);
+                params.put("rentstartdate", Global.dateTimeFormatter.format(now));
+                params.put("rentenddate", Global.dateTimeFormatter.format(nowPlusOneMonth));
+
+                return params;
+            }
+        };
+
+        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 }

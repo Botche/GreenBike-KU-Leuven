@@ -24,6 +24,7 @@ import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeBrand;
+import com.example.greenbike.database.services.BrandService;
 import com.example.greenbike.databinding.FragmentBrandsEditBinding;
 
 import java.util.HashMap;
@@ -53,51 +54,11 @@ public class BrandsEditFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BrandsEditFragment.this.onEdit(v);
+                BrandService.update(nameInput.getText().toString(), bikeBrand.getId(), BrandsEditFragment.this.getActivity());
             }
         });
 
         return root;
-    }
-
-
-    public void onEdit(View v)
-    {
-        Activity origin = (Activity)this.getContext();
-
-        String name = this.nameInput.getText().toString();
-        String id = this.bikeBrand.getId();
-
-        if (Validator.isNullOrEmpty(name)) {
-            Toast.makeText(origin, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
-
-            return;
-        }
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_BRAND_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_brands);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.EDIT_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", id);
-                params.put("name", name);
-
-                return params;
-            }
-        };
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     @Override

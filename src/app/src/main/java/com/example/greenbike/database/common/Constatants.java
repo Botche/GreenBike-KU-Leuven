@@ -28,4 +28,5 @@ public class Constatants {
     public static String EDIT_BIKE_URL = Constatants.BASE_URL + "/editBike";
     public static String DELETE_BIKE_URL = Constatants.BASE_URL + "/deleteBike";
     public static String BUY_BIKE_URL = Constatants.BASE_URL + "/buyBike";
+    public static String RENT_BIKE_URL = Constatants.BASE_URL + "/rentBike";
 }

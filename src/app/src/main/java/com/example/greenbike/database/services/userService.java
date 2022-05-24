@@ -1,7 +1,6 @@
 package com.example.greenbike.database.services;
 
 import com.example.greenbike.database.models.user.User;
-import com.example.greenbike.database.services.interfaces.IService;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -9,26 +8,26 @@ import java.security.MessageDigest;
 import java.util.List;
 import java.security.NoSuchAlgorithmException;
 
-public class userService implements IService<User> {
+public class UserService {
 
-    @Override
     public User create(User entity) {
         return null;
     }
 
-    @Override
     public User getById(String id) {
         return null;
     }
 
-    @Override
     public List<User> getAll() {
         return null;
     }
 
-    @Override
     public User update(User entity) {
         return null;
+    }
+
+    public void delete(String id) {
+
     }
 
     private String hashPassword(String password) throws NoSuchAlgorithmException {

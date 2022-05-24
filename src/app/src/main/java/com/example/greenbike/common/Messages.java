@@ -29,6 +29,8 @@ public class Messages {
     public static String EDIT_BIKE_ERROR_MESSAGE = "Edit bike failed!";
     public static String DELETE_BIKE_ERROR_MESSAGE = "Delete bike failed!";
     public static String BUY_BIKE_ERROR_MESSAGE = "Buying process of bike failed!";
+    public static String RENT_BIKE_ERROR_MESSAGE = "Renting process of bike failed!";
 
     public static String SUCCESSFULLY_BOUGHT_BIKE = "Successfully bought the bike! Please go to the shop to pay and take your new bike";
+    public static String SUCCESSFULLY_RENTED_BIKE = "Successfully rented the bike! Please go to the shop to pay and take your new bike";
 }
