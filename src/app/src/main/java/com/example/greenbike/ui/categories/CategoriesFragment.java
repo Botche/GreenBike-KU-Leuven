@@ -1,6 +1,7 @@
 package com.example.greenbike.ui.categories;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,12 +21,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
+import com.example.greenbike.adapters.BikeBrandAdapter;
 import com.example.greenbike.adapters.BikeCategoryAdapter;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
+import com.example.greenbike.database.services.BrandService;
+import com.example.greenbike.database.services.CategoryService;
 import com.example.greenbike.databinding.FragmentCategoriesBinding;
+import com.example.greenbike.ui.brands.BrandsFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -36,19 +42,14 @@ import java.util.ArrayList;
 
 public class CategoriesFragment extends Fragment {
     private FragmentCategoriesBinding binding;
-    private final ArrayList<BikeCategory> allBikeCategories;
     private View root;
-
-    public CategoriesFragment() {
-        this.allBikeCategories = new ArrayList<BikeCategory>();
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoriesBinding.inflate(inflater, container, false);
         this.root = binding.getRoot();
 
-        this.getAllBikeCategories();
+        CategoryService.getAll(root, R.id.bikeCategoryList, CategoriesFragment::fillFragments);
 
         Button createButton = root.findViewById(R.id.createBikeCategoryPlusButton);
         createButton.setTag(root);
@@ -71,52 +72,13 @@ public class CategoriesFragment extends Fragment {
         binding = null;
     }
 
-    private void getAllBikeCategories() {
-        Activity origin = (Activity)this.getContext();
+    public static View fillFragments(View root, ArrayList<BikeCategory> allBikeCategories, Integer bikeCategoryListId) {
+        Context context = root.getContext();
+        BikeCategoryAdapter adapter = new BikeCategoryAdapter(context, allBikeCategories);
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_CATEGORIES_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            CategoriesFragment.this.allBikeCategories.clear();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
-
-                                CategoriesFragment.this.allBikeCategories.add(data);
-                            }
-
-                            CategoriesFragment.this.fillFragments();
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void fillFragments() {
-        BikeCategoryAdapter adapter = new BikeCategoryAdapter(this.getContext(), this.allBikeCategories);
-
-        ListView listView = this.root.findViewById(R.id.bikeCategoryList);
+        ListView listView = root.findViewById(bikeCategoryListId);
         listView.setAdapter(adapter);
+
+        return root;
     }
 }
