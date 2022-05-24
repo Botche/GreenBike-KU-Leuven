@@ -6,6 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".ui.bikes.BikesFragment">
 
+    <LinearLayout
+        android:id="@+id/mainHeadingLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mainHeading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/list_of_bikes"
+            android:textSize="30sp" />
+
+        <ListView
+            android:id="@+id/adminBikesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="20sp"
+            android:scrollingCache="true"
+            android:smoothScrollbar="true"
+            android:stretchMode="columnWidth"
+            app:layout_constraintTop_toBottomOf="@+id/mainHeading" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/createBikePlusButton"
         android:layout_width="55dp"

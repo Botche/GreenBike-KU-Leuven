@@ -1,11 +1,16 @@
 package com.example.greenbike.database.models.bike;
 
+import android.graphics.Bitmap;
+
 import com.example.greenbike.database.models.BaseModel;
 
 public class Bike extends BaseModel {
     private String model;
+    private String brandId;
     private BikeBrand bikeBrand;
+    private String materialId;
     private BikeMaterial bikeMaterial;
+    private String categoryId;
     private BikeCategory bikeCategory;
     private String imageURL;
     private Boolean isForRent;
@@ -77,5 +82,29 @@ public class Bike extends BaseModel {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getMaterialId() {
+        return materialId;
+    }
+
+    public void setMaterialId(String materialId) {
+        this.materialId = materialId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }
