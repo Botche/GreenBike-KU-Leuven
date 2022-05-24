@@ -6,5 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.bikes.BikesFragment">
 
+    <Button
+        android:id="@+id/createBikePlusButton"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="40dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius="50dp"
+        android:backgroundTint="@color/teal_700"
+        android:text="+" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

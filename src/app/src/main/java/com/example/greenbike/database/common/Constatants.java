@@ -22,4 +22,9 @@ public class Constatants {
     public static String CREATE_MATERIAL_URL = Constatants.BASE_URL + "/createBikeMaterial";
     public static String EDIT_MATERIAL_URL = Constatants.BASE_URL + "/editBikeMaterial";
     public static String DELETE_MATERIAL_URL = Constatants.BASE_URL + "/deleteBikeMaterial";
+
+    public static String GET_BIKES_URL = Constatants.BASE_URL + "/getAllBikes";
+    public static String CREATE_BIKE_URL = Constatants.BASE_URL + "/createBike";
+    public static String EDIT_BIKE_URL = Constatants.BASE_URL + "/editBike";
+    public static String DELETE_BIKE_URL = Constatants.BASE_URL + "/deleteBike";
 }

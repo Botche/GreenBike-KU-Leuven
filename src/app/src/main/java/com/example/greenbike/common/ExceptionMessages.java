@@ -24,4 +24,8 @@ public class ExceptionMessages {
     public static String CREATE_MATERIAL_ERROR_MESSAGE = "Create bike material failed!";
     public static String EDIT_MATERIAL_ERROR_MESSAGE = "Edit bike material failed!";
     public static String DELETE_MATERIAL_ERROR_MESSAGE = "Delete bike material failed!";
+
+    public static String CREATE_BIKE_ERROR_MESSAGE = "Create bike failed!";
+    public static String EDIT_BIKE_ERROR_MESSAGE = "Edit bike failed!";
+    public static String DELETE_BIKE_ERROR_MESSAGE = "Delete bike failed!";
 }
