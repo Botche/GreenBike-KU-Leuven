@@ -19,7 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
-import com.example.greenbike.common.ExceptionMessages;
+import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
@@ -69,7 +69,7 @@ public class BrandsEditFragment extends Fragment {
         String id = this.bikeBrand.getId();
 
         if (Validator.isNullOrEmpty(name)) {
-            Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
+            Toast.makeText(origin, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
@@ -83,7 +83,7 @@ public class BrandsEditFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, ExceptionMessages.EDIT_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, Messages.EDIT_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

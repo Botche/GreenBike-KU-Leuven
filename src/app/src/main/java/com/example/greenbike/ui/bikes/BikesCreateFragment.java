@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,20 +26,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
-import com.example.greenbike.adapters.BikeBrandAdapter;
-import com.example.greenbike.common.ExceptionMessages;
+import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
 import com.example.greenbike.database.models.bike.BikeMaterial;
-import com.example.greenbike.databinding.FragmentBikesBinding;
 import com.example.greenbike.databinding.FragmentBikesCreateBinding;
-import com.example.greenbike.ui.brands.BrandsCreateFragment;
-import com.example.greenbike.ui.brands.BrandsFragment;
-import com.example.greenbike.ui.categories.CategoriesFragment;
-import com.example.greenbike.ui.materials.MaterialsFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -51,8 +44,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class BikesCreateFragment extends Fragment {
     private FragmentBikesCreateBinding binding;
@@ -137,7 +128,7 @@ public class BikesCreateFragment extends Fragment {
                 Validator.isNullOrEmpty(categoryId);
 
         if (isInvalid) {
-            Toast.makeText(origin, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
+            Toast.makeText(origin, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
@@ -151,7 +142,7 @@ public class BikesCreateFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, ExceptionMessages.CREATE_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, Messages.CREATE_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -200,7 +191,7 @@ public class BikesCreateFragment extends Fragment {
                         }
                         catch(JSONException e)
                         {
-                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
+                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -209,7 +200,7 @@ public class BikesCreateFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, ExceptionMessages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -261,7 +252,7 @@ public class BikesCreateFragment extends Fragment {
                         }
                         catch(JSONException e)
                         {
-                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
+                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -270,7 +261,7 @@ public class BikesCreateFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, ExceptionMessages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -322,7 +313,7 @@ public class BikesCreateFragment extends Fragment {
                         }
                         catch(JSONException e)
                         {
-                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
+                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -331,7 +322,7 @@ public class BikesCreateFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, ExceptionMessages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

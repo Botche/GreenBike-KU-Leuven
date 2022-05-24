@@ -1,26 +1,21 @@
-package com.example.greenbike.ui.bikes;
+package com.example.greenbike;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.greenbike.R;
-import com.example.greenbike.adapters.BikeAdapter;
+import com.example.greenbike.adapters.UserBikeAdapter;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
@@ -28,7 +23,6 @@ import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
 import com.example.greenbike.database.models.bike.BikeMaterial;
-import com.example.greenbike.databinding.FragmentBikesBinding;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -37,62 +31,50 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BikesFragment extends Fragment {
-    private FragmentBikesBinding binding;
+public class HomeActivity extends AppCompatActivity {
     private final ArrayList<Bike> allBikes;
-    private ArrayList<BikeMaterial> bikeMaterials;
-    private ArrayList<BikeCategory> bikeCategories;
-    private ArrayList<BikeBrand> bikeBrands;
+    private final ArrayList<BikeMaterial> bikeMaterials;
+    private final ArrayList<BikeCategory> bikeCategories;
+    private final ArrayList<BikeBrand> bikeBrands;
 
-    private View root;
-
-    public BikesFragment() {
-        this.allBikes = new ArrayList<Bike>();
-        this.bikeMaterials = new ArrayList<BikeMaterial>();
-        this.bikeCategories = new ArrayList<BikeCategory>();
-        this.bikeBrands = new ArrayList<BikeBrand>();
+    public HomeActivity() {
+        this.allBikes = new ArrayList<>();
+        this.bikeMaterials = new ArrayList<>();
+        this.bikeCategories = new ArrayList<>();
+        this.bikeBrands = new ArrayList<>();
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentBikesBinding.inflate(inflater, container, false);
-        this.root = binding.getRoot();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
 
         this.getAllBikeBrands();
         this.getAllBikeMaterials();
         this.getAllBikeCategories();
-
-        Button createButton = root.findViewById(R.id.createBikePlusButton);
-        createButton.setTag(root);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Activity origin = (Activity)root.getContext();
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_bikes_create);
-            }
-        });
-
-        return root;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.logoutLink) {
+            Intent myIntent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getAllBikes() {
-        boolean isDataNotReady = this.bikeBrands.size() == 0 ||
-                this.bikeMaterials.size() == 0 ||
-                this.bikeCategories.size() == 0;
-
-        if (isDataNotReady) {
-            return;
-        }
-
-        Activity origin = (Activity)this.getContext();
-
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BIKES_URL, null,
                 new Response.Listener<JSONArray>()
                 {
@@ -100,23 +82,29 @@ public class BikesFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            BikesFragment.this.allBikes.clear();
+                            allBikes.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
 
                                 Gson gson = new Gson();
                                 Bike data = gson.fromJson(String.valueOf(jsonObject), Bike.class);
+
+                                if (jsonObject.getString("is_taken").equals("1")) {
+                                    continue;
+                                }
+
                                 data.setImageURL(jsonObject.getString("image_url"));
                                 data.setBrandId(jsonObject.getString("brand_id"));
                                 data.setMaterialId(jsonObject.getString("material_id"));
                                 data.setCategoryId(jsonObject.getString("category_id"));
                                 data.setIsForRent(jsonObject.getString("is_for_rent").equals("1"));
+                                data.setTaken(jsonObject.getString("is_taken").equals("1"));
 
-                                BikesFragment.this.allBikes.add(data);
+                                allBikes.add(data);
                             }
 
-                            BikesFragment.this.fillFragments();
+                            fillFragments();
                         }
                         catch(JSONException e)
                         {
@@ -129,7 +117,7 @@ public class BikesFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -157,15 +145,13 @@ public class BikesFragment extends Fragment {
                     .get());
         }
 
-        BikeAdapter adapter = new BikeAdapter(this.getContext(), this.allBikes);
+        UserBikeAdapter adapter = new UserBikeAdapter(HomeActivity.this, this.allBikes);
 
-        ListView listView = this.root.findViewById(R.id.adminBikesList);
+        ListView listView = findViewById(R.id.userBikesList);
         listView.setAdapter(adapter);
     }
 
     private void getAllBikeBrands() {
-        Activity origin = (Activity)this.getContext();
-
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BRANDS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
@@ -173,7 +159,7 @@ public class BikesFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            BikesFragment.this.bikeBrands.clear();
+                            bikeBrands.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
@@ -181,10 +167,10 @@ public class BikesFragment extends Fragment {
                                 Gson gson = new Gson();
                                 BikeBrand data = gson.fromJson(String.valueOf(jsonObject), BikeBrand.class);
 
-                                BikesFragment.this.bikeBrands.add(data);
+                                bikeBrands.add(data);
                             }
 
-                            BikesFragment.this.getAllBikes();
+                            getAllBikes();
                         }
                         catch(JSONException e)
                         {
@@ -197,7 +183,7 @@ public class BikesFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -206,8 +192,6 @@ public class BikesFragment extends Fragment {
     }
 
     private void getAllBikeMaterials() {
-        Activity origin = (Activity)this.getContext();
-
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_MATERIALS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
@@ -215,7 +199,7 @@ public class BikesFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            BikesFragment.this.bikeMaterials.clear();
+                            bikeMaterials.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
@@ -223,10 +207,10 @@ public class BikesFragment extends Fragment {
                                 Gson gson = new Gson();
                                 BikeMaterial data = gson.fromJson(String.valueOf(jsonObject), BikeMaterial.class);
 
-                                BikesFragment.this.bikeMaterials.add(data);
+                                bikeMaterials.add(data);
                             }
 
-                            BikesFragment.this.getAllBikes();
+                            getAllBikes();
                         }
                         catch(JSONException e)
                         {
@@ -239,7 +223,7 @@ public class BikesFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -248,8 +232,6 @@ public class BikesFragment extends Fragment {
     }
 
     private void getAllBikeCategories() {
-        Activity origin = (Activity)this.getContext();
-
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_CATEGORIES_URL, null,
                 new Response.Listener<JSONArray>()
                 {
@@ -257,7 +239,7 @@ public class BikesFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            BikesFragment.this.bikeCategories.clear();
+                            bikeCategories.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
@@ -265,10 +247,10 @@ public class BikesFragment extends Fragment {
                                 Gson gson = new Gson();
                                 BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
 
-                                BikesFragment.this.bikeCategories.add(data);
+                                bikeCategories.add(data);
                             }
 
-                            BikesFragment.this.getAllBikes();
+                            getAllBikes();
                         }
                         catch(JSONException e)
                         {
@@ -281,7 +263,7 @@ public class BikesFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

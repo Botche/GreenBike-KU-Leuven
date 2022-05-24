@@ -10,15 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.ExecutorDelivery;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.greenbike.common.ExceptionMessages;
+import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
@@ -31,9 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class LoginActivity extends AppCompatActivity {
     private final ArrayList<UserRole> userRoles = new ArrayList<UserRole>();
@@ -67,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = this.passwordInput.getText().toString();
 
         if(Validator.isNullOrEmpty(email) || Validator.isNullOrEmpty((password))) {
-            Toast.makeText(LoginActivity.this, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
@@ -81,14 +74,14 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     try {
                         if (Validator.checkIfResponseIsCorrect(response) == false) {
-                            Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;
                         }
 
                         JSONObject jsonObject = response.getJSONObject(0);
                         if (Validator.checkCredentialsForLogin(jsonObject, password) == false) {
-                            Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;
                         }
@@ -107,13 +100,13 @@ public class LoginActivity extends AppCompatActivity {
 
                         Global.currentUser = user;
 
-                       Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                       startActivity(myIntent);
-                       finish();
+                        Intent myIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(myIntent);
+                        finish();
                     }
                     catch(JSONException e)
                     {
-                        Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
+                        Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
                 }
             },
@@ -122,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error)
                 {
-                    Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
                 }
             }
         );
@@ -151,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         catch(JSONException e)
                         {
-                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
+                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -160,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

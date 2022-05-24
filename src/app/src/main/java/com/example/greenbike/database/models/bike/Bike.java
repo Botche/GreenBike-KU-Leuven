@@ -15,9 +15,10 @@ public class Bike extends BaseModel {
     private String imageURL;
     private Boolean isForRent;
     private double price;
+    private Boolean isTaken;
 
     public Bike(String id, BikeBrand bikeBrand, BikeMaterial bikeMaterial, BikeCategory bikeCategory,
-                String imageURL, Boolean isForRent, double price) {
+                String imageURL, Boolean isForRent, double price, Boolean isTaken) {
         super(id);
 
         this.setBikeBrand(bikeBrand);
@@ -26,6 +27,7 @@ public class Bike extends BaseModel {
         this.setImageURL(imageURL);
         this.setIsForRent(isForRent);
         this.setPrice(price);
+        this.setTaken(isTaken);
     }
 
     public String getModel() {
@@ -106,5 +108,13 @@ public class Bike extends BaseModel {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Boolean getTaken() {
+        return this.isTaken;
+    }
+
+    public void setTaken(Boolean taken) {
+        this.isTaken = taken;
     }
 }

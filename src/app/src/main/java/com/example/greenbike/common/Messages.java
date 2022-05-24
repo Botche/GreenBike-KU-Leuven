@@ -1,6 +1,6 @@
 package com.example.greenbike.common;
 
-public class ExceptionMessages {
+public class Messages {
     public static String DATABASE_ERROR_TAG = "Database";
 
     public static String EMPTY_FIELDS = "Some fields are empty!";
@@ -28,4 +28,7 @@ public class ExceptionMessages {
     public static String CREATE_BIKE_ERROR_MESSAGE = "Create bike failed!";
     public static String EDIT_BIKE_ERROR_MESSAGE = "Edit bike failed!";
     public static String DELETE_BIKE_ERROR_MESSAGE = "Delete bike failed!";
+    public static String BUY_BIKE_ERROR_MESSAGE = "Buying process of bike failed!";
+
+    public static String SUCCESSFULLY_BOUGHT_BIKE = "Successfully bought the bike! Please go to the shop to pay and take your new bike";
 }

@@ -4,32 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-import com.android.volley.AuthFailureError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.greenbike.common.ExceptionMessages;
+import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
-import com.example.greenbike.databinding.MainScreenBinding;
 
 import java.util.HashMap;
 import java.util.UUID;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -65,27 +55,27 @@ public class RegisterActivity extends AppCompatActivity {
         String repeatPassword = this.repeatPasswordInput.getText().toString();
 
         if(Validator.isNullOrEmpty(email) || Validator.isNullOrEmpty((password)) || Validator.isNullOrEmpty((repeatPassword))) {
-            Toast.makeText(RegisterActivity.this, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
 
         if (Validator.isEmailValid(email) == false) {
-            Toast.makeText(RegisterActivity.this, ExceptionMessages.NOT_VALID_EMAIL,
+            Toast.makeText(RegisterActivity.this, Messages.NOT_VALID_EMAIL,
                     Toast.LENGTH_SHORT).show();
 
             return;
         }
 
         if (Validator.isLowerThan(password, 3)) {
-            Toast.makeText(RegisterActivity.this, ExceptionMessages.PASSWORD_TOO_SMALL,
+            Toast.makeText(RegisterActivity.this, Messages.PASSWORD_TOO_SMALL,
                     Toast.LENGTH_SHORT).show();
 
             return;
         }
 
         if (Validator.equalsTo(password, repeatPassword)) {
-            Toast.makeText(RegisterActivity.this, ExceptionMessages.PASSWORDS_DID_NOT_MATCH,
+            Toast.makeText(RegisterActivity.this, Messages.PASSWORDS_DID_NOT_MATCH,
                     Toast.LENGTH_SHORT).show();
 
             return;
@@ -101,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, ExceptionMessages.REGISTER_FAILED, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, Messages.REGISTER_FAILED, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
