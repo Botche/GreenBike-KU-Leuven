@@ -58,12 +58,21 @@ public class BikeAdapter extends ArrayAdapter<Bike> {
         TextView bikeId = convertView.findViewById(R.id.bikeItemId);
         TextView bikeModel = convertView.findViewById(R.id.bikeItemModel);
         SimpleDraweeView image = convertView.findViewById(R.id.bikeItemImage);
+        TextView bikeCategoryName = convertView.findViewById(R.id.bikeItemCategoryName);
+        TextView bikeBrandName = convertView.findViewById(R.id.bikeItemBrandName);
+        TextView bikeMaterialName = convertView.findViewById(R.id.bikeItemMaterialName);
+        TextView bikeIsForRent = convertView.findViewById(R.id.bikeItemIsForRent);
+        TextView bikePrice = convertView.findViewById(R.id.bikeItemPrice);
 
         bikeId.setText(item.getId());
-        bikeModel.setText(item.getModel());
-
+        bikeModel.setText("Model: " + item.getModel());
         Uri uri = Uri.parse(item.getImageURL());
         image.setImageURI(uri);
+        bikeCategoryName.setText("Category: " + item.getBikeCategory().getName());
+        bikeBrandName.setText("Brand: " + item.getBikeBrand().getName());
+        bikeMaterialName.setText("Material: " + item.getBikeMaterial().getName());
+        bikeIsForRent.setText("Is for rent: " + item.getIsForRent().toString());
+        bikePrice.setText("Price: " + item.getPrice());
 
         Button deleteButton = convertView.findViewById(R.id.deleteBikeItemButton);
         deleteButton.setTag(position);
