@@ -20,4 +20,10 @@ public class Validator {
 
         return isInvalid;
     }
+
+    public static boolean isBikeBrandInvalid(String name) {
+        boolean isInvalid = name.isEmpty();
+
+        return isInvalid;
+    }
 }
