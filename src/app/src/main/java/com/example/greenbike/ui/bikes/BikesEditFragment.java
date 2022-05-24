@@ -114,11 +114,6 @@ public class BikesEditFragment extends Fragment {
         this.bikeMaterialsSelectedIdInput.setText(bike.getMaterialId());
         this.bikeCategoriesSelectedIdInput.setText(bike.getCategoryId());
 
-
-//        this.bikeBrandsSelect.setSelection(this.bikeBrandsSelectIndex);
-//        this.bikeMaterialsSelect.setSelection(this.bikeMaterialsSelectIndex);
-//        this.bikeCategoriesSelect.setSelection(this.bikeCategoriesSelectIndex);
-
         Button createButton = root.findViewById(R.id.editBikeButton);
         createButton.setTag(root);
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -251,6 +246,7 @@ public class BikesEditFragment extends Fragment {
         );
 
         this.bikeBrandsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeBrand());
+        this.bikeBrandsSelect.setSelection(this.bikeBrandsSelectIndex);
     }
 
     private void getAllBikeMaterials() {
@@ -314,6 +310,7 @@ public class BikesEditFragment extends Fragment {
         );
 
         this.bikeMaterialsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeMaterial());
+        this.bikeMaterialsSelect.setSelection(this.bikeMaterialsSelectIndex);
     }
 
     private void getAllBikeCategories() {
@@ -377,6 +374,7 @@ public class BikesEditFragment extends Fragment {
         );
 
         this.bikeCategoriesSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeCategory());
+        this.bikeCategoriesSelect.setSelection(this.bikeCategoriesSelectIndex);
     }
 
     private int indexOfAdapter(ArrayAdapter adapter, BaseBike baseBike)
