@@ -124,7 +124,7 @@ public class BikesCreateFragment extends Fragment {
     public void onCreate(View v) {
         String model = this.modelInput.getText().toString();
         String imageURL = this.createBikeURLInput.getText().toString();
-        Boolean isForRent = this.isForRentInput.isChecked();
+        String isForRent = String.valueOf(this.isForRentInput.isChecked() ? 1 : 0);
         String brandId = this.bikeBrandsSelectedIdInput.getText().toString();
         String materialId = this.bikeMaterialsSelectedIdInput.getText().toString();
         String categoryId = this.bikeCategoriesSelectedIdInput.getText().toString();
@@ -165,7 +165,7 @@ public class BikesCreateFragment extends Fragment {
                 params.put("materialid", materialId);
                 params.put("categoryid", categoryId);
                 params.put("imageurl", imageURL);
-                params.put("isforrent", isForRent.toString());
+                params.put("isforrent", isForRent);
                 params.put("price", price);
 
                 return params;
