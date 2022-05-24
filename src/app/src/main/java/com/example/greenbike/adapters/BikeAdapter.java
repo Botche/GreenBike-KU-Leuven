@@ -121,7 +121,7 @@ public class BikeAdapter extends ArrayAdapter<Bike> {
         bundle.putSerializable("Bike", bike);
 
         NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-        //navController.navigate(R.id.nav_brands_edit, bundle);
+        navController.navigate(R.id.nav_bikes_edit, bundle);
 
     }
 }

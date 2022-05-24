@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Global.currentUser = user;
 
-                        Intent myIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(myIntent);
                         finish();
                     }
