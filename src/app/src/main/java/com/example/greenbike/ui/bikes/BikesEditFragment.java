@@ -54,12 +54,15 @@ public class BikesEditFragment extends Fragment {
     private ArrayList<BikeBrand> bikeBrands;
 
     private Spinner bikeBrandsSelect;
+    private Integer bikeBrandsSelectIndex;
     private TextView bikeBrandsSelectedIdInput;
 
     private Spinner bikeMaterialsSelect;
+    private Integer bikeMaterialsSelectIndex;
     private TextView bikeMaterialsSelectedIdInput;
 
     private Spinner bikeCategoriesSelect;
+    private Integer bikeCategoriesSelectIndex;
     private TextView bikeCategoriesSelectedIdInput;
 
     private Switch isForRentInput;
@@ -68,8 +71,6 @@ public class BikesEditFragment extends Fragment {
     private EditText priceInput;
 
     private Bike bike;
-
-    private int spinnerPosition = 2;
 
     public BikesEditFragment() {
         this.bikeMaterials = new ArrayList<BikeMaterial>();
@@ -113,6 +114,10 @@ public class BikesEditFragment extends Fragment {
         this.bikeMaterialsSelectedIdInput.setText(bike.getMaterialId());
         this.bikeCategoriesSelectedIdInput.setText(bike.getCategoryId());
 
+
+//        this.bikeBrandsSelect.setSelection(this.bikeBrandsSelectIndex);
+//        this.bikeMaterialsSelect.setSelection(this.bikeMaterialsSelectIndex);
+//        this.bikeCategoriesSelect.setSelection(this.bikeCategoriesSelectIndex);
 
         Button createButton = root.findViewById(R.id.editBikeButton);
         createButton.setTag(root);
@@ -245,8 +250,7 @@ public class BikesEditFragment extends Fragment {
                 }
         );
 
-        int spinnerPosition = this.indexOfAdapter(adapter, this.bike.getBikeBrand());
-        this.bikeBrandsSelect.setSelection(spinnerPosition);
+        this.bikeBrandsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeBrand());
     }
 
     private void getAllBikeMaterials() {
@@ -309,8 +313,7 @@ public class BikesEditFragment extends Fragment {
                 }
         );
 
-        int spinnerPosition = this.indexOfAdapter(adapter, this.bike.getBikeMaterial());
-        this.bikeBrandsSelect.setSelection(spinnerPosition);
+        this.bikeMaterialsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeMaterial());
     }
 
     private void getAllBikeCategories() {
@@ -373,8 +376,7 @@ public class BikesEditFragment extends Fragment {
                 }
         );
 
-        int spinnerPosition = this.indexOfAdapter(adapter, this.bike.getBikeCategory());
-        this.bikeBrandsSelect.setSelection(spinnerPosition);
+        this.bikeCategoriesSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeCategory());
     }
 
     private int indexOfAdapter(ArrayAdapter adapter, BaseBike baseBike)
