@@ -63,31 +63,27 @@ public class RegisterActivity extends AppCompatActivity {
         String password = this.passwordInput.getText().toString();
         String repeatPassword = this.repeatPasswordInput.getText().toString();
 
-        boolean isInvalid = email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty();
-        if(isInvalid) {
+        if(Validator.isNullOrEmpty(email) || Validator.isNullOrEmpty((password)) || Validator.isNullOrEmpty((repeatPassword))) {
             Toast.makeText(RegisterActivity.this, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-        isInvalid = Validator.isEmailValid(email) == false;
-        if (isInvalid) {
+        if (Validator.isEmailValid(email) == false) {
             Toast.makeText(RegisterActivity.this, ExceptionMessages.NOT_VALID_EMAIL,
                     Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-        isInvalid = password.length() <= 3;
-        if (isInvalid) {
+        if (Validator.isLowerThan(password, 3)) {
             Toast.makeText(RegisterActivity.this, ExceptionMessages.PASSWORD_TOO_SMALL,
                     Toast.LENGTH_SHORT).show();
 
             return;
         }
 
-        isInvalid = password.equals(repeatPassword) == false;
-        if (isInvalid) {
+        if (Validator.equalsTo(password, repeatPassword)) {
             Toast.makeText(RegisterActivity.this, ExceptionMessages.PASSWORDS_DID_NOT_MATCH,
                     Toast.LENGTH_SHORT).show();
 

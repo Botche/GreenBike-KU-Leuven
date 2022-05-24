@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.greenbike.common.ExceptionMessages;
 import com.example.greenbike.common.Global;
+import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.user.User;
 import com.example.greenbike.database.models.user.UserRole;
@@ -64,8 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = this.emailInput.getText().toString();
         String password = this.passwordInput.getText().toString();
 
-        boolean isInvalid = email.isEmpty() || password.isEmpty();
-        if(isInvalid) {
+        if(Validator.isNullOrEmpty(email) || Validator.isNullOrEmpty((password))) {
             Toast.makeText(LoginActivity.this, ExceptionMessages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
 
             return;
@@ -79,19 +79,14 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(JSONArray response)
                 {
                     try {
-                        boolean isInvalid = response.length() != 1;
-
-                        if (isInvalid) {
+                        if (Validator.checkIfResponseIsCorrect(response) == false) {
                             Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;
                         }
 
                         JSONObject jsonObject = response.getJSONObject(0);
-
-                        String userPassword = jsonObject.getString("password");
-                        isInvalid = userPassword.equals(password) == false;
-                        if (isInvalid) {
+                        if (Validator.checkCredentialsForLogin(jsonObject, password) == false) {
                             Toast.makeText(LoginActivity.this, ExceptionMessages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;
