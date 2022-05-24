@@ -52,7 +52,6 @@ public class BikesFragment extends Fragment {
     private ArrayList<BikeCategory> bikeCategories;
     private ArrayList<BikeBrand> bikeBrands;
 
-
     private View root;
 
     public BikesFragment() {
@@ -120,7 +119,7 @@ public class BikesFragment extends Fragment {
                                 data.setBrandId(jsonObject.getString("brand_id"));
                                 data.setMaterialId(jsonObject.getString("material_id"));
                                 data.setCategoryId(jsonObject.getString("category_id"));
-                                data.setIsForRent(jsonObject.getString("is_for_rent") == "1" ? true : false);
+                                data.setIsForRent(jsonObject.getString("is_for_rent").equals("1"));
 
                                 BikesFragment.this.allBikes.add(data);
                             }
