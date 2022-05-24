@@ -53,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(myIntent);
+                finish();
             }
         });
     }
@@ -95,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(myIntent);
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override

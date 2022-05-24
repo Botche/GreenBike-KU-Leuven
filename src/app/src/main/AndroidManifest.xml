@@ -14,19 +14,19 @@
         android:theme="@style/Theme.GreenBike">
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
+            android:label="RegisterActivity" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:label="LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.GreenBike.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

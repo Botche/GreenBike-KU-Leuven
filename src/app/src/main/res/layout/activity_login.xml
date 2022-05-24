@@ -55,6 +55,7 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:inputType="textEmailAddress"
+                android:text="user@user.user"
                 android:hint="Email" />
         </LinearLayout>
 
@@ -81,6 +82,7 @@
                 android:inputType="textPassword"
                 tools:layout_editor_absoluteX="47dp"
                 tools:layout_editor_absoluteY="499dp"
+                android:text="123123"
                 android:hint="Password" />
         </LinearLayout>
 

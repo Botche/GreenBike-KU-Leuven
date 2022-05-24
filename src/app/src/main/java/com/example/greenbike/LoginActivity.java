@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(myIntent);
+                finish();
             }
         });
     }
@@ -108,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                        startActivity(myIntent);
+                       finish();
                     }
                     catch(JSONException e)
                     {
