@@ -16,15 +16,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeCategoryAdapter;
-import com.example.greenbike.common.ExceptionMessages;
+import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
-import com.example.greenbike.common.VolleyRequestQueue;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeCategory;
 import com.example.greenbike.databinding.FragmentCategoriesBinding;
@@ -98,7 +96,7 @@ public class CategoriesFragment extends Fragment {
                         }
                         catch(JSONException e)
                         {
-                            Log.e(ExceptionMessages.DATABASE_ERROR_TAG, e.getMessage(), e);
+                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                         }
                     }
                 },
@@ -107,7 +105,7 @@ public class CategoriesFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(origin, ExceptionMessages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

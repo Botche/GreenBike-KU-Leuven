@@ -15,12 +15,11 @@ import android.widget.Toast;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.greenbike.common.ExceptionMessages;
+import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BikeMaterial;
@@ -85,7 +84,7 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, ExceptionMessages.DELETE_MATERIAL_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                Toast.makeText(origin, Messages.DELETE_MATERIAL_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
