@@ -18,10 +18,9 @@ import com.example.greenbike.common.BikeFilterOptions;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Validator;
-import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.bike.Bike;
-import com.example.greenbike.database.models.bike.BikeBrand;
-import com.example.greenbike.ui.bikes.BikesFragment;
+import com.example.greenbike.database.models.mapping.UserBikeMapping;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -48,7 +47,7 @@ public class BikeService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.CREATE_BIKE_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.CREATE_BIKE_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -84,7 +83,7 @@ public class BikeService {
     public static void getAll(BikeFilterOptions filterOptions, View root, Integer listId, Function3<View, ArrayList<Bike>, Integer, View> callBackFunction) {
         Activity origin = (Activity)root.getContext();
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BIKES_URL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_BIKES_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -136,6 +135,61 @@ public class BikeService {
         Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
+    public static void getAll(ArrayList<UserBikeMapping> userBikeMappings, View root, Integer listId, Function3<View, ArrayList<Bike>, Integer, View> callBackFunction) {
+        Activity origin = (Activity)root.getContext();
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_BIKES_URL, null,
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try {
+                            ArrayList<Bike> allBikes = new ArrayList<>();
+
+                            for (int index = 0; index < response.length(); index++) {
+                                JSONObject jsonObject = response.getJSONObject(index);
+
+                                Gson gson = new Gson();
+                                Bike data = gson.fromJson(String.valueOf(jsonObject), Bike.class);
+                                data.setImageURL(jsonObject.getString("image_url"));
+                                data.setBrandId(jsonObject.getString("brand_id"));
+                                data.setMaterialId(jsonObject.getString("material_id"));
+                                data.setCategoryId(jsonObject.getString("category_id"));
+                                data.setIsForRent(jsonObject.getString("is_for_rent").equals("1"));
+                                data.setTaken(jsonObject.getString("is_taken").equals("1"));
+
+                                for (UserBikeMapping userBikeMapping : userBikeMappings) {
+                                    if (data.getTaken()
+                                        && userBikeMapping.getBikeId().equals(data.getId())
+                                        && userBikeMapping.getUserId().equals(Global.currentUser.getId())) {
+                                        allBikes.add(data);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            callBackFunction.invoke(root, allBikes, listId);
+                        }
+                        catch(JSONException e)
+                        {
+                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+        Global.requestQueue.addToRequestQueue(submitRequest);
+    }
+
     public static void update(String id, String model, String imageURL, String isForRent, String brandId, String materialId, String categoryId,String price, Activity origin) {
         boolean isInvalid = Validator.isNullOrEmpty(model) || Validator.isNullOrEmpty(imageURL) ||
                 Validator.isNullOrEmpty(brandId) || Validator.isNullOrEmpty(materialId) ||
@@ -147,7 +201,7 @@ public class BikeService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_BIKE_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.EDIT_BIKE_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -179,7 +233,7 @@ public class BikeService {
     }
 
     public static void delete(String id, Activity origin) {
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_BIKE_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.DELETE_BIKE_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -207,7 +261,7 @@ public class BikeService {
     public static void buyBike(View view, String bikeId) {
         Activity origin = (Activity)view.getContext();
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.BUY_BIKE_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.BUY_BIKE_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_user_home);
@@ -243,7 +297,7 @@ public class BikeService {
     public static void rentBike(View view, String bikeId) {
         Activity origin = (Activity)view.getContext();
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.RENT_BIKE_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.RENT_BIKE_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_user_home);
@@ -270,6 +324,36 @@ public class BikeService {
                 params.put("bikeid", bikeId);
                 params.put("rentstartdate", Global.dateTimeFormatter.format(now));
                 params.put("rentenddate", Global.dateTimeFormatter.format(nowPlusOneMonth));
+
+                return params;
+            }
+        };
+
+        Global.requestQueue.addToRequestQueue(submitRequest);
+    }
+
+    public static void returnBike(View view, String bikeId) {
+        Activity origin = (Activity)view.getContext();
+
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.RETURN_BIKE_URL,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                NavController navController = Navigation.findNavController(origin, R.id.nav_user_home);
+                navController.navigate(R.id.navigation_mine);
+
+                Toast.makeText(origin, Messages.SUCCESSFULLY_RETURNED_BIKE, Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(origin, Messages.RETURN_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("bikeid", bikeId);
 
                 return params;
             }

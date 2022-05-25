@@ -17,7 +17,7 @@ import com.example.greenbike.R;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Validator;
-import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.google.gson.Gson;
 
@@ -40,7 +40,7 @@ public class BrandService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.CREATE_BRAND_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.CREATE_BRAND_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -70,7 +70,7 @@ public class BrandService {
     public static void getAll(View root, Integer listId, Function3<View, ArrayList<BikeBrand>, Integer, View> callBackFunction) {
         Activity origin = (Activity)root.getContext();
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BRANDS_URL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_BRANDS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -115,7 +115,7 @@ public class BrandService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_BRAND_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.EDIT_BRAND_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -142,7 +142,7 @@ public class BrandService {
     }
 
     public static void delete(String id, Activity origin) {
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_BRAND_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.DELETE_BRAND_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);

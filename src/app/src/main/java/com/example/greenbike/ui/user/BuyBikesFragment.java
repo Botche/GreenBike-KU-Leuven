@@ -18,12 +18,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
-import com.example.greenbike.adapters.BikeAdapter;
 import com.example.greenbike.adapters.UserBikeAdapter;
 import com.example.greenbike.common.BikeFilterOptions;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Messages;
-import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
@@ -96,7 +95,7 @@ public class BuyBikesFragment extends Fragment {
     private void getAllBikeBrands() {
         Activity origin = (Activity)this.getContext();
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BRANDS_URL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_BRANDS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -144,7 +143,7 @@ public class BuyBikesFragment extends Fragment {
     private void getAllBikeMaterials() {
         Activity origin = (Activity)this.getContext();
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_MATERIALS_URL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_MATERIALS_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -192,7 +191,7 @@ public class BuyBikesFragment extends Fragment {
     private void getAllBikeCategories() {
         Activity origin = (Activity)this.getContext();
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_CATEGORIES_URL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override

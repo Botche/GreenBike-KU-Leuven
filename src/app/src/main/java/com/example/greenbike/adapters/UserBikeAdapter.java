@@ -51,20 +51,27 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
         bikePrice.setText("Price: " + item.getPrice());
 
         Button actionBikeButton = convertView.findViewById(R.id.actionBikeButton);
-        String actionBikeButtonText = item.getIsForRent() ? "Rent" : "Buy";
-        actionBikeButton.setText(actionBikeButtonText);
         actionBikeButton.setTag(position);
-        actionBikeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (actionBikeButtonText.equals("Rent")) {
-                    BikeService.rentBike(v, item.getId());
-                } else {
-                    BikeService.buyBike(v, item.getId());
-                }
+        if (item.getTaken() && !item.getIsForRent()) {
+            actionBikeButton.setVisibility(View.GONE);
+        } else {
+            String actionBikeButtonText = item.getTaken() ? "Return" : item.getIsForRent() ? "Rent" : "Buy";
+            actionBikeButton.setText(actionBikeButtonText);
+            actionBikeButton.setVisibility(View.VISIBLE);
+            actionBikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item.getTaken()) {
+                        BikeService.returnBike(v, item.getId());
+                    } else if(actionBikeButtonText.equals("Rent")) {
+                        BikeService.rentBike(v, item.getId());
+                    } else {
+                        BikeService.buyBike(v, item.getId());
+                    }
 
-            }
-        });
+                }
+            });
+        }
 
         return convertView;
     }

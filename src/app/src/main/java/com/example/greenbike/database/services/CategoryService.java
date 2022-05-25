@@ -17,10 +17,8 @@ import com.example.greenbike.R;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Validator;
-import com.example.greenbike.database.common.Constatants;
-import com.example.greenbike.database.models.bike.BikeBrand;
+import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.bike.BikeCategory;
-import com.example.greenbike.ui.categories.CategoriesFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -42,7 +40,7 @@ public class CategoryService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.CREATE_CATEGORY_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.CREATE_CATEGORY_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -72,7 +70,7 @@ public class CategoryService {
     public static void getAll(View root, Integer listId, Function3<View, ArrayList<BikeCategory>, Integer, View> callBackFunction) {
         Activity origin = (Activity)root.getContext();
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_CATEGORIES_URL, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
@@ -118,7 +116,7 @@ public class CategoryService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_CATEGORY_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.EDIT_CATEGORY_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
@@ -145,7 +143,7 @@ public class CategoryService {
     }
 
     public static void delete(String id, Activity origin) {
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_CATEGORY_URL,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.DELETE_CATEGORY_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);

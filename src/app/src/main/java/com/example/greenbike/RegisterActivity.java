@@ -16,7 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
-import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.common.Constants;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.REGISTER_USER,  new Response.Listener<String>() {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.REGISTER_USER,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);

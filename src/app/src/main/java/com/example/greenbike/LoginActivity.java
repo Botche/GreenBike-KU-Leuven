@@ -17,7 +17,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Validator;
-import com.example.greenbike.database.common.Constatants;
+import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.user.User;
 import com.example.greenbike.database.models.user.UserRole;
 import com.google.gson.Gson;
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        String requestUrl = String.format(Constatants.LOGIN_USER, email);
+        String requestUrl = String.format(Constants.LOGIN_USER, email);
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestUrl, null,
             new Response.Listener<JSONArray>()
             {
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Class activityToRedirect = UserHomeActivity.class;
 
-                        if (user.getUserRole().getName().equals(Constatants.ADMIN_ROLE)) {
+                        if (user.getUserRole().getName().equals(Constants.ADMIN_ROLE)) {
                             activityToRedirect =  MainActivity.class;
                         }
 
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getUserRoles() {
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_ALL_USER_ROLES, null,
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_ALL_USER_ROLES, null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override

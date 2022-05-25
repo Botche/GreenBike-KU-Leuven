@@ -11,26 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
-import com.example.greenbike.common.Messages;
-import com.example.greenbike.common.Global;
-import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.services.BrandService;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class BikeAdapter extends ArrayAdapter<Bike> {

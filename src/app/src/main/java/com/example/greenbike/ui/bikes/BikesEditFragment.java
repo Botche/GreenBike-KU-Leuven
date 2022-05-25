@@ -1,9 +1,7 @@
 package com.example.greenbike.ui.bikes;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +12,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
-import com.example.greenbike.common.Global;
-import com.example.greenbike.common.Messages;
-import com.example.greenbike.common.Validator;
-import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.BaseBike;
 import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.models.bike.BikeBrand;
@@ -41,16 +27,8 @@ import com.example.greenbike.database.services.BrandService;
 import com.example.greenbike.database.services.CategoryService;
 import com.example.greenbike.database.services.MaterialService;
 import com.example.greenbike.databinding.FragmentBikesEditBinding;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class BikesEditFragment extends Fragment {
     private FragmentBikesEditBinding binding;

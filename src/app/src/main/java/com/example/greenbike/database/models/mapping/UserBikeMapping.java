@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 
 public class UserBikeMapping extends BaseModel {
     private User user;
+    private String userId;
     private Bike bike;
+    private String bikeId;
     private LocalDateTime rentStartDate;
     private LocalDateTime rentEndDate;
     private LocalDateTime buyDate;
@@ -62,5 +64,21 @@ public class UserBikeMapping extends BaseModel {
 
     public void setBuyDate(LocalDateTime buyDate) {
         this.buyDate = buyDate;
+    }
+
+    public String getBikeId() {
+        return bikeId;
+    }
+
+    public void setBikeId(String bikeId) {
+        this.bikeId = bikeId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

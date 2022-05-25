@@ -3,40 +3,22 @@ package com.example.greenbike.ui.categories;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
-import com.example.greenbike.adapters.BikeBrandAdapter;
 import com.example.greenbike.adapters.BikeCategoryAdapter;
-import com.example.greenbike.common.Messages;
-import com.example.greenbike.common.Global;
-import com.example.greenbike.database.common.Constatants;
-import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
-import com.example.greenbike.database.services.BrandService;
 import com.example.greenbike.database.services.CategoryService;
 import com.example.greenbike.databinding.FragmentCategoriesBinding;
-import com.example.greenbike.ui.brands.BrandsFragment;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
