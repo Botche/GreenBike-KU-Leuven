@@ -2,7 +2,6 @@ package com.example.greenbike;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -101,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Global.currentUser = user;
 
-                        Class activityToRedirect = DemoActivity.class;
+                        Class activityToRedirect = UserHomeActivity.class;
 
                         if (user.getUserRole().getName().equals(Constatants.ADMIN_ROLE)) {
                             activityToRedirect =  MainActivity.class;

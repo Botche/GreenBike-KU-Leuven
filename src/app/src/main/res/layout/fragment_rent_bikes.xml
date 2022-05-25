@@ -7,33 +7,36 @@
     tools:context=".ui.user.RentBikesFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/mainHeadingLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/mainHeading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
-            android:orientation="horizontal">
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/list_of_bike_for_rent"
+            android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/bikeItemModel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center|center_horizontal"
-                android:gravity="center"
-                android:text="Welcome to admin panel"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-        
+        <ListView
+            android:id="@+id/rentBikesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="20sp"
+            android:scrollingCache="true"
+            android:smoothScrollbar="true"
+            android:stretchMode="columnWidth"
+            app:layout_constraintTop_toBottomOf="@+id/mainHeading" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

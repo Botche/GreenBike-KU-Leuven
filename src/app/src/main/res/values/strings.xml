@@ -31,4 +31,5 @@
     <string name="title_home">For Rent</string>
     <string name="title_dashboard">For Buy</string>
     <string name="title_notifications">Mine</string>
+    <string name="list_of_bike_for_rent">List of bike for rent</string>
 </resources>
