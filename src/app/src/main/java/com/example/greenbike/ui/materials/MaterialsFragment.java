@@ -54,7 +54,7 @@ public class MaterialsFragment extends Fragment {
         binding = FragmentMaterialsBinding.inflate(inflater, container, false);
         this.root = binding.getRoot();
 
-        MaterialService.getAll(root, R.id.bikeMaterialList, MaterialsFragment::fillFragments);
+        MaterialService.getAll(root, R.id.bikeMaterialList, this::fillFragments);
 
         Button createButton = root.findViewById(R.id.createBikeMaterialPlusButton);
         createButton.setTag(root);
@@ -76,7 +76,7 @@ public class MaterialsFragment extends Fragment {
         binding = null;
     }
 
-    public static View fillFragments(View root, ArrayList<BikeMaterial> allBikeMaterials, Integer bikeMaterialListId) {
+    public View fillFragments(View root, ArrayList<BikeMaterial> allBikeMaterials, Integer bikeMaterialListId) {
         Context context = root.getContext();
         BikeMaterialAdapter adapter = new BikeMaterialAdapter(context, allBikeMaterials);
 

@@ -49,7 +49,7 @@ public class CategoriesFragment extends Fragment {
         binding = FragmentCategoriesBinding.inflate(inflater, container, false);
         this.root = binding.getRoot();
 
-        CategoryService.getAll(root, R.id.bikeCategoryList, CategoriesFragment::fillFragments);
+        CategoryService.getAll(root, R.id.bikeCategoryList, this::fillFragments);
 
         Button createButton = root.findViewById(R.id.createBikeCategoryPlusButton);
         createButton.setTag(root);
@@ -72,7 +72,7 @@ public class CategoriesFragment extends Fragment {
         binding = null;
     }
 
-    public static View fillFragments(View root, ArrayList<BikeCategory> allBikeCategories, Integer bikeCategoryListId) {
+    public View fillFragments(View root, ArrayList<BikeCategory> allBikeCategories, Integer bikeCategoryListId) {
         Context context = root.getContext();
         BikeCategoryAdapter adapter = new BikeCategoryAdapter(context, allBikeCategories);
 

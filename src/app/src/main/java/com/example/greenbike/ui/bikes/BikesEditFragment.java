@@ -1,6 +1,7 @@
 package com.example.greenbike.ui.bikes;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,10 @@ import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
 import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.database.services.BikeService;
+import com.example.greenbike.database.services.BrandService;
+import com.example.greenbike.database.services.CategoryService;
+import com.example.greenbike.database.services.MaterialService;
 import com.example.greenbike.databinding.FragmentBikesEditBinding;
 import com.google.gson.Gson;
 
@@ -49,20 +54,9 @@ import java.util.UUID;
 
 public class BikesEditFragment extends Fragment {
     private FragmentBikesEditBinding binding;
-    private ArrayList<BikeMaterial> bikeMaterials;
-    private ArrayList<BikeCategory> bikeCategories;
-    private ArrayList<BikeBrand> bikeBrands;
 
-    private Spinner bikeBrandsSelect;
-    private Integer bikeBrandsSelectIndex;
     private TextView bikeBrandsSelectedIdInput;
-
-    private Spinner bikeMaterialsSelect;
-    private Integer bikeMaterialsSelectIndex;
     private TextView bikeMaterialsSelectedIdInput;
-
-    private Spinner bikeCategoriesSelect;
-    private Integer bikeCategoriesSelectIndex;
     private TextView bikeCategoriesSelectedIdInput;
 
     private Switch isForRentInput;
@@ -72,24 +66,13 @@ public class BikesEditFragment extends Fragment {
 
     private Bike bike;
 
-    public BikesEditFragment() {
-        this.bikeMaterials = new ArrayList<BikeMaterial>();
-        this.bikeCategories = new ArrayList<BikeCategory>();
-        this.bikeBrands = new ArrayList<BikeBrand>();
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentBikesEditBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        this.bikeBrandsSelect = root.findViewById(R.id.spinnerBikeBrandsEdit);
         this.bikeBrandsSelectedIdInput = root.findViewById(R.id.editBikeSelectedBrandId);
-
-        this.bikeMaterialsSelect = root.findViewById(R.id.spinnerBikeMaterialsEdit);
         this.bikeMaterialsSelectedIdInput = root.findViewById(R.id.editBikeSelectedMaterialId);
-
-        this.bikeCategoriesSelect = root.findViewById(R.id.spinnerBikeCategoriesEdit);
         this.bikeCategoriesSelectedIdInput = root.findViewById(R.id.editBikeSelectedCategoryId);
 
         this.isForRentInput = root.findViewById(R.id.bikeEditIsForRent);
@@ -97,9 +80,9 @@ public class BikesEditFragment extends Fragment {
         this.editBikeURLInput = root.findViewById(R.id.editBikeURL);
         this.priceInput = root.findViewById(R.id.editBikePrice);
 
-        this.getAllBikeBrands();
-        this.getAllBikeMaterials();
-        this.getAllBikeCategories();
+        BrandService.getAll(root, android.R.layout.simple_spinner_dropdown_item, this::fillBikeBrandsFragments);
+        MaterialService.getAll(root, android.R.layout.simple_spinner_dropdown_item, this::fillBikeMaterialsFragments);
+        CategoryService.getAll(root, android.R.layout.simple_spinner_dropdown_item, this::fillBikeCategoriesFragments);
 
         Bundle bundle = getArguments();
         if(bundle != null) {
@@ -119,7 +102,16 @@ public class BikesEditFragment extends Fragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BikesEditFragment.this.onEdit(v);
+                String id = bike.getId();
+                String model = modelInput.getText().toString();
+                String imageURL = editBikeURLInput.getText().toString();
+                String isForRent = String.valueOf(isForRentInput.isChecked() ? 1 : 0);
+                String brandId = bikeBrandsSelectedIdInput.getText().toString();
+                String materialId = bikeMaterialsSelectedIdInput.getText().toString();
+                String categoryId = bikeCategoriesSelectedIdInput.getText().toString();
+                String price = priceInput.getText().toString();
+
+                BikeService.update(id, model, imageURL, isForRent, brandId, materialId, categoryId, price, BikesEditFragment.this.getActivity());
             }
         });
 
@@ -132,109 +124,17 @@ public class BikesEditFragment extends Fragment {
         binding = null;
     }
 
-    public void onEdit(View v) {
-        String id = this.bike.getId();
-        String model = this.modelInput.getText().toString();
-        String imageURL = this.editBikeURLInput.getText().toString();
-        String isForRent = String.valueOf(this.isForRentInput.isChecked() ? 1 : 0);
-        String brandId = this.bikeBrandsSelectedIdInput.getText().toString();
-        String materialId = this.bikeMaterialsSelectedIdInput.getText().toString();
-        String categoryId = this.bikeCategoriesSelectedIdInput.getText().toString();
-        String price = this.priceInput.getText().toString();
+    public View fillBikeBrandsFragments(View root, ArrayList<BikeBrand> bikeBrands, Integer simpleSpinnerDropdownItemId) {
+        Context context = root.getContext();
+        final BikeBrand items[] = bikeBrands.toArray(new BikeBrand[0]);
 
-        Activity origin = (Activity)this.getContext();
+        Spinner bikeBrandsSelect = root.findViewById(R.id.spinnerBikeBrandsEdit);
 
-        boolean isInvalid = Validator.isNullOrEmpty(model) || Validator.isNullOrEmpty(imageURL) ||
-                Validator.isNullOrEmpty(brandId) || Validator.isNullOrEmpty(materialId) ||
-                Validator.isNullOrEmpty(categoryId);
+        ArrayAdapter<BikeBrand> adapter = new ArrayAdapter<>(context, simpleSpinnerDropdownItemId, items);
+        adapter.setDropDownViewResource(simpleSpinnerDropdownItemId);
+        bikeBrandsSelect.setAdapter(adapter);
 
-        if (isInvalid) {
-            Toast.makeText(origin, Messages.EMPTY_FIELDS, Toast.LENGTH_SHORT).show();
-
-            return;
-        }
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.EDIT_BIKE_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_bikes);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.EDIT_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", id);
-                params.put("model", model);
-                params.put("brandid", brandId);
-                params.put("materialid", materialId);
-                params.put("categoryid", categoryId);
-                params.put("imageurl", imageURL);
-                params.put("isforrent", isForRent);
-                params.put("price", price);
-
-                return params;
-            }
-        };
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void getAllBikeBrands() {
-        Activity origin = (Activity)this.getContext();
-
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BRANDS_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            BikesEditFragment.this.bikeBrands.clear();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                BikeBrand data = gson.fromJson(String.valueOf(jsonObject), BikeBrand.class);
-
-                                BikesEditFragment.this.bikeBrands.add(data);
-                            }
-
-                            BikesEditFragment.this.fillBikeBrandsFragments();
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void fillBikeBrandsFragments() {
-        final BikeBrand items[] = this.bikeBrands.toArray(new BikeBrand[0]);
-
-        ArrayAdapter<BikeBrand> adapter = new ArrayAdapter<BikeBrand>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.bikeBrandsSelect.setAdapter(adapter);
-
-        this.bikeBrandsSelect.setOnItemSelectedListener(
+        bikeBrandsSelect.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         BikeBrand bikeBrand = items[position];
@@ -245,60 +145,23 @@ public class BikesEditFragment extends Fragment {
                 }
         );
 
-        this.bikeBrandsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeBrand());
-        this.bikeBrandsSelect.setSelection(this.bikeBrandsSelectIndex);
+        int bikeBrandsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeBrand());
+        bikeBrandsSelect.setSelection(bikeBrandsSelectIndex);
+
+        return root;
     }
 
-    private void getAllBikeMaterials() {
-        Activity origin = (Activity)this.getContext();
+    public View fillBikeMaterialsFragments(View root, ArrayList<BikeMaterial> bikeMaterials, Integer simpleSpinnerDropdownItemId) {
+        Context context = root.getContext();
+        final BikeMaterial items[] = bikeMaterials.toArray(new BikeMaterial[0]);
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_MATERIALS_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            BikesEditFragment.this.bikeMaterials.clear();
+        Spinner bikeMaterialsSelect = root.findViewById(R.id.spinnerBikeMaterialsEdit);
 
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
+        ArrayAdapter<BikeMaterial> adapter = new ArrayAdapter<>(context, simpleSpinnerDropdownItemId, items);
+        adapter.setDropDownViewResource(simpleSpinnerDropdownItemId);
+        bikeMaterialsSelect.setAdapter(adapter);
 
-                                Gson gson = new Gson();
-                                BikeMaterial data = gson.fromJson(String.valueOf(jsonObject), BikeMaterial.class);
-
-                                BikesEditFragment.this.bikeMaterials.add(data);
-                            }
-
-                            BikesEditFragment.this.fillBikeMaterialsFragments();
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void fillBikeMaterialsFragments() {
-        final BikeMaterial items[] = this.bikeMaterials.toArray(new BikeMaterial[0]);
-
-        ArrayAdapter<BikeMaterial> adapter = new ArrayAdapter<BikeMaterial>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.bikeMaterialsSelect.setAdapter(adapter);
-
-        this.bikeMaterialsSelect.setOnItemSelectedListener(
+        bikeMaterialsSelect.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         BikeMaterial bikeMaterial = items[position];
@@ -309,60 +172,23 @@ public class BikesEditFragment extends Fragment {
                 }
         );
 
-        this.bikeMaterialsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeMaterial());
-        this.bikeMaterialsSelect.setSelection(this.bikeMaterialsSelectIndex);
+        int bikeMaterialsSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeMaterial());
+        bikeMaterialsSelect.setSelection(bikeMaterialsSelectIndex);
+
+        return root;
     }
 
-    private void getAllBikeCategories() {
-        Activity origin = (Activity)this.getContext();
+    public View fillBikeCategoriesFragments(View root, ArrayList<BikeCategory> bikeCategories, Integer simpleSpinnerDropdownItemId) {
+        Context context = root.getContext();
+        final BikeCategory items[] = bikeCategories.toArray(new BikeCategory[0]);
 
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_CATEGORIES_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            BikesEditFragment.this.bikeCategories.clear();
+        Spinner bikeCategoriesSelect = root.findViewById(R.id.spinnerBikeCategoriesEdit);
 
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
+        ArrayAdapter<BikeCategory> adapter = new ArrayAdapter<BikeCategory>(context, simpleSpinnerDropdownItemId, items);
+        adapter.setDropDownViewResource(simpleSpinnerDropdownItemId);
+        bikeCategoriesSelect.setAdapter(adapter);
 
-                                Gson gson = new Gson();
-                                BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
-
-                                BikesEditFragment.this.bikeCategories.add(data);
-                            }
-
-                            BikesEditFragment.this.fillBikeCategoriesFragments();
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void fillBikeCategoriesFragments() {
-        final BikeCategory items[] = this.bikeCategories.toArray(new BikeCategory[0]);
-
-        ArrayAdapter<BikeCategory> adapter = new ArrayAdapter<BikeCategory>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.bikeCategoriesSelect.setAdapter(adapter);
-
-        this.bikeCategoriesSelect.setOnItemSelectedListener(
+        bikeCategoriesSelect.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         BikeCategory bikeCategory = items[position];
@@ -373,8 +199,10 @@ public class BikesEditFragment extends Fragment {
                 }
         );
 
-        this.bikeCategoriesSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeCategory());
-        this.bikeCategoriesSelect.setSelection(this.bikeCategoriesSelectIndex);
+        int bikeCategoriesSelectIndex = this.indexOfAdapter(adapter, this.bike.getBikeCategory());
+        bikeCategoriesSelect.setSelection(bikeCategoriesSelectIndex);
+
+        return root;
     }
 
     private int indexOfAdapter(ArrayAdapter adapter, BaseBike baseBike)

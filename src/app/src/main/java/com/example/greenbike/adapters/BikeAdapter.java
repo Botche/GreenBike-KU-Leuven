@@ -25,6 +25,7 @@ import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.Bike;
+import com.example.greenbike.database.services.BrandService;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class BikeAdapter extends ArrayAdapter<Bike> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BikeAdapter.this.onDeleteBike(v, item.getId());
+                BrandService.delete(item.getId(), (Activity)BikeAdapter.this.getContext());
             }
         });
 
@@ -84,34 +85,6 @@ public class BikeAdapter extends ArrayAdapter<Bike> {
         });
 
         return convertView;
-    }
-
-    private void onDeleteBike(View v, String id) {
-        Activity origin = (Activity)this.getContext();
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.DELETE_BIKE_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_bikes);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.DELETE_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("id", id);
-
-                return params;
-            }
-        };
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
     private void onEditBike(View v, Bike bike) {

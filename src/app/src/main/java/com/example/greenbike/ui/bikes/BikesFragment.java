@@ -1,6 +1,7 @@
 package com.example.greenbike.ui.bikes;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,10 @@ import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.example.greenbike.database.models.bike.BikeCategory;
 import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.database.services.BikeService;
+import com.example.greenbike.database.services.BrandService;
+import com.example.greenbike.database.services.CategoryService;
+import com.example.greenbike.database.services.MaterialService;
 import com.example.greenbike.databinding.FragmentBikesBinding;
 import com.google.gson.Gson;
 
@@ -39,28 +44,20 @@ import java.util.ArrayList;
 
 public class BikesFragment extends Fragment {
     private FragmentBikesBinding binding;
-    private final ArrayList<Bike> allBikes;
-    private ArrayList<BikeMaterial> bikeMaterials;
-    private ArrayList<BikeCategory> bikeCategories;
-    private ArrayList<BikeBrand> bikeBrands;
+    private static final ArrayList<BikeMaterial> bikeMaterials = new ArrayList<>();
+    private static final ArrayList<BikeCategory> bikeCategories =  new ArrayList<>();
+    private static final ArrayList<BikeBrand> bikeBrands = new ArrayList<>();
 
     private View root;
-
-    public BikesFragment() {
-        this.allBikes = new ArrayList<Bike>();
-        this.bikeMaterials = new ArrayList<BikeMaterial>();
-        this.bikeCategories = new ArrayList<BikeCategory>();
-        this.bikeBrands = new ArrayList<BikeBrand>();
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentBikesBinding.inflate(inflater, container, false);
         this.root = binding.getRoot();
 
-        this.getAllBikeBrands();
-        this.getAllBikeMaterials();
-        this.getAllBikeCategories();
+        getAllBikeBrands();
+        getAllBikeCategories();
+        getAllBikeMaterials();
 
         Button createButton = root.findViewById(R.id.createBikePlusButton);
         createButton.setTag(root);
@@ -82,85 +79,33 @@ public class BikesFragment extends Fragment {
         binding = null;
     }
 
-    private void getAllBikes() {
-        boolean isDataNotReady = this.bikeBrands.size() == 0 ||
-                this.bikeMaterials.size() == 0 ||
-                this.bikeCategories.size() == 0;
+    public static View fillFragments(View root, ArrayList<Bike> allBikes, Integer bikeListId) {
+        Context context = root.getContext();
+        for (int index = 0; index < allBikes.size(); index++) {
+            Bike bike = allBikes.get(index);
 
-        if (isDataNotReady) {
-            return;
-        }
-
-        Activity origin = (Activity)this.getContext();
-
-        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BIKES_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        try {
-                            BikesFragment.this.allBikes.clear();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                Bike data = gson.fromJson(String.valueOf(jsonObject), Bike.class);
-                                data.setImageURL(jsonObject.getString("image_url"));
-                                data.setBrandId(jsonObject.getString("brand_id"));
-                                data.setMaterialId(jsonObject.getString("material_id"));
-                                data.setCategoryId(jsonObject.getString("category_id"));
-                                data.setIsForRent(jsonObject.getString("is_for_rent").equals("1"));
-
-                                BikesFragment.this.allBikes.add(data);
-                            }
-
-                            BikesFragment.this.fillFragments();
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void fillFragments() {
-        for (int index = 0; index < this.allBikes.size(); index++) {
-            Bike bike = this.allBikes.get(index);
-
-            bike.setBikeBrand(this.bikeBrands.stream()
+            bike.setBikeBrand(bikeBrands.stream()
                     .filter(brand -> brand.getId().equals(bike.getBrandId()))
                     .findFirst()
                     .get());
 
-            bike.setBikeCategory(this.bikeCategories.stream()
+            bike.setBikeCategory(bikeCategories.stream()
                     .filter(bc -> bc.getId().equals(bike.getCategoryId()))
                     .findFirst()
                     .get());
 
-            bike.setBikeMaterial(this.bikeMaterials.stream()
+            bike.setBikeMaterial(bikeMaterials.stream()
                     .filter(bm -> bm.getId().equals(bike.getMaterialId()))
                     .findFirst()
                     .get());
         }
 
-        BikeAdapter adapter = new BikeAdapter(this.getContext(), this.allBikes);
+        BikeAdapter adapter = new BikeAdapter(context, allBikes);
 
-        ListView listView = this.root.findViewById(R.id.adminBikesList);
+        ListView listView = root.findViewById(bikeListId);
         listView.setAdapter(adapter);
+
+        return root;
     }
 
     private void getAllBikeBrands() {
@@ -173,7 +118,7 @@ public class BikesFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            BikesFragment.this.bikeBrands.clear();
+                            bikeBrands.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
@@ -181,10 +126,16 @@ public class BikesFragment extends Fragment {
                                 Gson gson = new Gson();
                                 BikeBrand data = gson.fromJson(String.valueOf(jsonObject), BikeBrand.class);
 
-                                BikesFragment.this.bikeBrands.add(data);
+                                bikeBrands.add(data);
                             }
 
-                            BikesFragment.this.getAllBikes();
+                            boolean isDataReady = bikeBrands.size() != 0 &&
+                                    bikeMaterials.size() != 0 &&
+                                    bikeCategories.size() != 0;
+
+                            if (isDataReady) {
+                                BikeService.getAll(root, R.id.adminBikesList, BikesFragment::fillFragments);
+                            }
                         }
                         catch(JSONException e)
                         {
@@ -215,7 +166,7 @@ public class BikesFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            BikesFragment.this.bikeMaterials.clear();
+                            bikeMaterials.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
@@ -223,10 +174,16 @@ public class BikesFragment extends Fragment {
                                 Gson gson = new Gson();
                                 BikeMaterial data = gson.fromJson(String.valueOf(jsonObject), BikeMaterial.class);
 
-                                BikesFragment.this.bikeMaterials.add(data);
+                                bikeMaterials.add(data);
                             }
 
-                            BikesFragment.this.getAllBikes();
+                            boolean isDataReady = bikeBrands.size() != 0 &&
+                                    bikeMaterials.size() != 0 &&
+                                    bikeCategories.size() != 0;
+
+                            if (isDataReady) {
+                                BikeService.getAll(root, R.id.adminBikesList, BikesFragment::fillFragments);
+                            }
                         }
                         catch(JSONException e)
                         {
@@ -257,7 +214,7 @@ public class BikesFragment extends Fragment {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            BikesFragment.this.bikeCategories.clear();
+                            bikeCategories.clear();
 
                             for (int index = 0; index < response.length(); index++) {
                                 JSONObject jsonObject = response.getJSONObject(index);
@@ -265,10 +222,16 @@ public class BikesFragment extends Fragment {
                                 Gson gson = new Gson();
                                 BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
 
-                                BikesFragment.this.bikeCategories.add(data);
+                                bikeCategories.add(data);
                             }
 
-                            BikesFragment.this.getAllBikes();
+                            boolean isDataReady = bikeBrands.size() != 0 &&
+                                    bikeMaterials.size() != 0 &&
+                                    bikeCategories.size() != 0;
+
+                            if (isDataReady) {
+                                BikeService.getAll(root, R.id.adminBikesList, BikesFragment::fillFragments);
+                            }
                         }
                         catch(JSONException e)
                         {

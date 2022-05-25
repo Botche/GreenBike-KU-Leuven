@@ -31,7 +31,7 @@ public class BrandsFragment extends Fragment {
         binding = FragmentBrandsBinding.inflate(inflater, container, false);
         this.root = binding.getRoot();
 
-        BrandService.getAll(root, R.id.bikeBrandList, BrandsFragment::fillFragments);
+        BrandService.getAll(root, R.id.bikeBrandList, this::fillFragments);
 
         Button createButton = root.findViewById(R.id.createBikeBrandPlusButton);
         createButton.setTag(root);
@@ -53,7 +53,7 @@ public class BrandsFragment extends Fragment {
         binding = null;
     }
 
-    public static View fillFragments(View root, ArrayList<BikeBrand> allBikeBrands, Integer bikeBrandListId) {
+    public View fillFragments(View root, ArrayList<BikeBrand> allBikeBrands, Integer bikeBrandListId) {
         Context context = root.getContext();
         BikeBrandAdapter adapter = new BikeBrandAdapter(context, allBikeBrands);
 
