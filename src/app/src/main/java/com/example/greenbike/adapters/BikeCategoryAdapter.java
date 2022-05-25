@@ -34,7 +34,7 @@ public class BikeCategoryAdapter extends ArrayAdapter<BikeCategory> {
         }
 
         TextView bikeCategoryId = convertView.findViewById(R.id.bikeCategoryId);
-        TextView bikeCategoryName = convertView.findViewById(R.id.bikeCategoryName);
+        TextView bikeCategoryName = convertView.findViewById(R.id.bikeCategoryNameValue);
 
         bikeCategoryId.setText(item.getId());
         bikeCategoryName.setText(item.getName());
