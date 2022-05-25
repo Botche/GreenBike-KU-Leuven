@@ -42,4 +42,5 @@
     <string name="is_for_rent">Is for rent: </string>
     <string name="price">Price: </string>
     <string name="plus_sign">+</string>
+    <string name="name_semi_colon">Name:&#160;</string>
 </resources>

@@ -37,7 +37,7 @@ public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {
         }
 
         TextView bikeMaterialId = convertView.findViewById(R.id.bikeMaterialId);
-        TextView bikeMaterialName = convertView.findViewById(R.id.bikeMaterialName);
+        TextView bikeMaterialName = convertView.findViewById(R.id.bikeMaterialNameValue);
 
         bikeMaterialId.setText(item.getId());
         bikeMaterialName.setText(item.getName());
