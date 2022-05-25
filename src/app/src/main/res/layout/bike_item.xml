@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/teal_200"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingVertical="15dp">
 
     <TextView
         android:id="@+id/bikeItemId"
@@ -14,7 +15,6 @@
         android:visibility="invisible" />
 
     <LinearLayout
-        xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -22,15 +22,17 @@
         android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/bikeItemImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="200dp"
+            fresco:roundedCornerRadius="5dp"
             />
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -39,16 +41,26 @@
 
         <TextView
             android:id="@+id/bikeItemModel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal"
-            android:text="Drag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/model"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/bikeItemModelValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/bikeItemModel"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -57,16 +69,26 @@
 
         <TextView
             android:id="@+id/bikeItemCategoryName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal"
-            android:text="Category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/category"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/bikeItemCategoryNameValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/bikeItemCategoryName"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -75,16 +97,26 @@
 
         <TextView
             android:id="@+id/bikeItemBrandName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal"
-            android:text="Brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/brand"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/bikeItemBrandNameValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/bikeItemBrandName"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -93,16 +125,26 @@
 
         <TextView
             android:id="@+id/bikeItemMaterialName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal"
-            android:text="Material"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/material"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/bikeItemMaterialNameValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/bikeItemMaterialName"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -111,16 +153,26 @@
 
         <TextView
             android:id="@+id/bikeItemIsForRent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal"
-            android:text="Is for rent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/is_for_rent"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/bikeItemIsForRentValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/bikeItemIsForRent"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -129,14 +181,24 @@
 
         <TextView
             android:id="@+id/bikeItemPrice"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal"
-            android:text="Price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/price"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/bikeItemPriceValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/bikeItemPrice"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

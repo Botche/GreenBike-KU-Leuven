@@ -21,11 +21,13 @@
         android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/bikeImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="200dp"
             android:padding="10dp"
+            fresco:roundedCornerRadius="5dp"
             />
 
     </LinearLayout>

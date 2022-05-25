@@ -51,7 +51,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:cornerRadius="50dp"
-        android:backgroundTint="@color/teal_700"
-        android:text="+" />
+        android:shadowColor="@color/black"
+        android:backgroundTint="@color/purple_700"
+        android:text="@string/plus_sign" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
