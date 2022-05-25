@@ -2,6 +2,7 @@ package com.example.greenbike;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,8 +100,12 @@ public class LoginActivity extends AppCompatActivity {
                         user.setUserRole(userRole);
 
                         Global.currentUser = user;
+                        Intent myIntent = new Intent(LoginActivity.this, HomeActivity.class);
 
-                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        if (user.getUserRole().getName().equals(Constatants.ADMIN_ROLE)) {
+                            myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        }
+
                         startActivity(myIntent);
                         finish();
                     }
