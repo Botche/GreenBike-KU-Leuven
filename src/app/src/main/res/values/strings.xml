@@ -27,4 +27,8 @@
     <string name="edit_bike_brand">Edit bike brand</string>
     <string name="buy">Buy</string>
     <string name="rent">Rent</string>
+    <string name="title_activity_demo">DemoActivity</string>
+    <string name="title_home">For Rent</string>
+    <string name="title_dashboard">For Buy</string>
+    <string name="title_notifications">Mine</string>
 </resources>

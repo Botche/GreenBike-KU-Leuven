@@ -101,11 +101,12 @@ public class LoginActivity extends AppCompatActivity {
 
                         Global.currentUser = user;
 
-                        Class activityToRedirect = HomeActivity.class;
+                        Class activityToRedirect = DemoActivity.class;
 
                         if (user.getUserRole().getName().equals(Constatants.ADMIN_ROLE)) {
                             activityToRedirect =  MainActivity.class;
                         }
+
                         Intent myIntent = new Intent(LoginActivity.this, activityToRedirect);
 
                         startActivity(myIntent);

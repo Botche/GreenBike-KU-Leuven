@@ -1,4 +1,4 @@
-package com.example.greenbike.ui.home;
+package com.example.greenbike.ui.user;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.greenbike.databinding.FragmentHomeBinding;
+import com.example.greenbike.databinding.FragmentRentBikesBinding;
 
-public class HomeFragment extends Fragment {
+public class RentBikesFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentRentBikesBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentRentBikesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
