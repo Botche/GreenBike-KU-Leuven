@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
+import com.example.greenbike.common.BikeFilterOptions;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Validator;
@@ -79,7 +80,7 @@ public class BikeService {
         Global.requestQueue.addToRequestQueue(submitRequest);
     }
 
-    public static void getAll(View root, Integer listId, Function3<View, ArrayList<Bike>, Integer, View> callBackFunction) {
+    public static void getAll(BikeFilterOptions filterOptions, View root, Integer listId, Function3<View, ArrayList<Bike>, Integer, View> callBackFunction) {
         Activity origin = (Activity)root.getContext();
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constatants.GET_BIKES_URL, null,
@@ -101,8 +102,16 @@ public class BikeService {
                                 data.setMaterialId(jsonObject.getString("material_id"));
                                 data.setCategoryId(jsonObject.getString("category_id"));
                                 data.setIsForRent(jsonObject.getString("is_for_rent").equals("1"));
+                                data.setTaken(jsonObject.getString("is_taken").equals("1"));
 
-                                allBikes.add(data);
+                                if (filterOptions == BikeFilterOptions.All) {
+                                    allBikes.add(data);
+                                    continue;
+                                }
+
+                                if (!data.getTaken() && filterOptions.getStringValue().equals("1") == data.getIsForRent()) {
+                                    allBikes.add(data);
+                                }
                             }
 
                             callBackFunction.invoke(root, allBikes, listId);

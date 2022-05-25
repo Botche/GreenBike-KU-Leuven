@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeAdapter;
+import com.example.greenbike.common.BikeFilterOptions;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.database.common.Constatants;
@@ -55,9 +56,9 @@ public class BikesFragment extends Fragment {
         binding = FragmentBikesBinding.inflate(inflater, container, false);
         this.root = binding.getRoot();
 
-        getAllBikeBrands();
-        getAllBikeCategories();
-        getAllBikeMaterials();
+        this.getAllBikeBrands();
+        this.getAllBikeCategories();
+        this.getAllBikeMaterials();
 
         Button createButton = root.findViewById(R.id.createBikePlusButton);
         createButton.setTag(root);
@@ -134,7 +135,7 @@ public class BikesFragment extends Fragment {
                                     bikeCategories.size() != 0;
 
                             if (isDataReady) {
-                                BikeService.getAll(root, R.id.adminBikesList, BikesFragment::fillFragments);
+                                BikeService.getAll(BikeFilterOptions.All, root, R.id.adminBikesList, BikesFragment::fillFragments);
                             }
                         }
                         catch(JSONException e)
@@ -182,7 +183,7 @@ public class BikesFragment extends Fragment {
                                     bikeCategories.size() != 0;
 
                             if (isDataReady) {
-                                BikeService.getAll(root, R.id.adminBikesList, BikesFragment::fillFragments);
+                                BikeService.getAll(BikeFilterOptions.All, root, R.id.adminBikesList, BikesFragment::fillFragments);
                             }
                         }
                         catch(JSONException e)
@@ -230,7 +231,7 @@ public class BikesFragment extends Fragment {
                                     bikeCategories.size() != 0;
 
                             if (isDataReady) {
-                                BikeService.getAll(root, R.id.adminBikesList, BikesFragment::fillFragments);
+                                BikeService.getAll(BikeFilterOptions.All, root, R.id.adminBikesList, BikesFragment::fillFragments);
                             }
                         }
                         catch(JSONException e)
