@@ -55,7 +55,6 @@ public class BuyBikesFragment extends Fragment {
         this.getAllBikeCategories();
         this.getAllBikeMaterials();
 
-
         return root;
     }
 
