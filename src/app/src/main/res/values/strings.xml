@@ -35,4 +35,10 @@
     <string name="list_of_bikes_for_buy">List of bikes for buy</string>
     <string name="your_taken_bikes">Your taken bikes</string>
     <string name="welcome_to_admin_panel">Welcome to admin panel</string>
+    <string name="model">Model: </string>
+    <string name="category">Category: </string>
+    <string name="brand">Brand: </string>
+    <string name="material">Material: </string>
+    <string name="is_for_rent">Is for rent: </string>
+    <string name="price">Price: </string>
 </resources>

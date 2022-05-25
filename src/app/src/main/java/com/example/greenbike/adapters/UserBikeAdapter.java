@@ -15,6 +15,7 @@ import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.services.BikeService;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public class UserBikeAdapter extends ArrayAdapter<Bike> {
@@ -32,23 +33,23 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
         }
 
         TextView bikeId = convertView.findViewById(R.id.bikeId);
-        TextView bikeModel = convertView.findViewById(R.id.bikeModel);
+        TextView bikeModel = convertView.findViewById(R.id.bikeModelValue);
         SimpleDraweeView image = convertView.findViewById(R.id.bikeImage);
-        TextView bikeCategoryName = convertView.findViewById(R.id.bikeCategoryName);
-        TextView bikeBrandName = convertView.findViewById(R.id.bikeBrandName);
-        TextView bikeMaterialName = convertView.findViewById(R.id.bikeMaterialName);
-        TextView bikeIsForRent = convertView.findViewById(R.id.bikeIsForRent);
-        TextView bikePrice = convertView.findViewById(R.id.bikePrice);
+        TextView bikeCategoryName = convertView.findViewById(R.id.bikeCategoryNameValue);
+        TextView bikeBrandName = convertView.findViewById(R.id.bikeBrandNameValue);
+        TextView bikeMaterialName = convertView.findViewById(R.id.bikeMaterialNameValue);
+        TextView bikeIsForRent = convertView.findViewById(R.id.bikeIsForRentValue);
+        TextView bikePrice = convertView.findViewById(R.id.bikePriceValue);
 
         bikeId.setText(item.getId());
-        bikeModel.setText("Model: " + item.getModel());
+        bikeModel.setText(item.getModel());
         Uri uri = Uri.parse(item.getImageURL());
         image.setImageURI(uri);
-        bikeCategoryName.setText("Category: " + item.getBikeCategory().getName());
-        bikeBrandName.setText("Brand: " + item.getBikeBrand().getName());
-        bikeMaterialName.setText("Material: " + item.getBikeMaterial().getName());
-        bikeIsForRent.setText("Is for rent: " + item.getIsForRent());
-        bikePrice.setText("Price: " + item.getPrice());
+        bikeCategoryName.setText(item.getBikeCategory().getName());
+        bikeBrandName.setText(item.getBikeBrand().getName());
+        bikeMaterialName.setText(item.getBikeMaterial().getName());
+        bikeIsForRent.setText(String.format("%s", item.getIsForRent()));
+        bikePrice.setText(String.format("%s", item.getPrice()));
 
         Button actionBikeButton = convertView.findViewById(R.id.actionBikeButton);
         actionBikeButton.setTag(position);
