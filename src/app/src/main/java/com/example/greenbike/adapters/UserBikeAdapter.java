@@ -3,7 +3,6 @@ package com.example.greenbike.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.greenbike.HomeActivity;
 import com.example.greenbike.R;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
@@ -26,7 +27,6 @@ import com.example.greenbike.database.models.bike.Bike;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,9 +90,8 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
         StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.BUY_BIKE_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent myIntent = new Intent(origin, HomeActivity.class);
-                origin.startActivity(myIntent);
-                origin.finish();
+                NavController navController = Navigation.findNavController(origin, R.id.nav_user_home);
+                navController.navigate(R.id.navigation_for_buy);
 
                 Toast.makeText(origin, Messages.SUCCESSFULLY_BOUGHT_BIKE, Toast.LENGTH_LONG).show();
             }
@@ -127,9 +126,8 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
         StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.RENT_BIKE_URL,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent myIntent = new Intent(origin, HomeActivity.class);
-                origin.startActivity(myIntent);
-                origin.finish();
+                NavController navController = Navigation.findNavController(origin, R.id.nav_user_home);
+                navController.navigate(R.id.navigation_for_rent);
 
                 Toast.makeText(origin, Messages.SUCCESSFULLY_RENTED_BIKE, Toast.LENGTH_LONG).show();
             }

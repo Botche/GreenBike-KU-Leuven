@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation2"
+    android:id="@+id/user_mobile_navigation"
     app:startDestination="@+id/navigation_for_rent">
 
     <fragment
@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_for_buy"
-        android:name="com.example.greenbike.ui.user.MineBikesFragment"
+        android:name="com.example.greenbike.ui.user.BuyBikesFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_mine_bikes" />
 
     <fragment
         android:id="@+id/navigation_mine"
-        android:name="com.example.greenbike.ui.user.BuyBikesFragment"
+        android:name="com.example.greenbike.ui.user.MineBikesFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_buy_bikes" />
 </navigation>

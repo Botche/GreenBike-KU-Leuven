@@ -14,9 +14,7 @@
         android:theme="@style/Theme.GreenBike">
         <activity
             android:name=".UserHomeActivity"
-            android:exported="false"
-            android:label="@string/title_activity_demo" />
-        <activity android:name=".HomeActivity" />
+            android:label="UserHomeActivity" />
         <activity
             android:name=".RegisterActivity"
             android:label="RegisterActivity" />

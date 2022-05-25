@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.BikeAdapter;
+import com.example.greenbike.adapters.UserBikeAdapter;
 import com.example.greenbike.common.BikeFilterOptions;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Messages;
@@ -88,7 +89,7 @@ public class RentBikesFragment extends Fragment {
                     .get());
         }
 
-        BikeAdapter adapter = new BikeAdapter(context, allBikes);
+        UserBikeAdapter adapter = new UserBikeAdapter(context, allBikes);
 
         ListView listView = root.findViewById(bikeListId);
         listView.setAdapter(adapter);
