@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_for_rent"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_bike_black_com"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_for_buy"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_bikes_sale_sign_in_dollars_svgrepo_com"
         android:title="@string/title_dashboard" />
 
     <item
         android:id="@+id/navigation_mine"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_bike_with_person"
         android:title="@string/title_notifications" />
 
 </menu>
