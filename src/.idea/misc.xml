@@ -8,6 +8,7 @@
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.198" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/drawable/ic_launcher_background.xml" value="0.198" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.198" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/drawable/round_layout.xml" value="0.198" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/drawable/side_nav_bar.xml" value="0.198" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_create_bike_material.xml" value="0.36666666666666664" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_demo.xml" value="0.19375" />
@@ -16,6 +17,7 @@
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_register.xml" value="0.18802083333333333" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/activity_user_home.xml" value="0.36666666666666664" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/bike_brand_item.xml" value="0.15" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/bike_category_item.xml" value="0.19375" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/bike_item.xml" value="0.36666666666666664" />
@@ -38,6 +40,7 @@
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_materials_create.xml" value="0.19375" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/fragment_notifications.xml" value="0.19375" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/main_screen.xml" value="0.19375" />
+        <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/layout/user_bike_item.xml" value="0.36666666666666664" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/GitHub/GreenBike-KU-Leuven/src/app/src/main/res/menu/main_activity.xml" value="0.36666666666666664" />
