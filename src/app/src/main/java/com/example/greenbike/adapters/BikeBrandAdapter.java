@@ -36,7 +36,7 @@ public class BikeBrandAdapter extends ArrayAdapter<BikeBrand> {
         }
 
         TextView bikeBrandId = convertView.findViewById(R.id.bikeBrandId);
-        TextView bikeBrandName = convertView.findViewById(R.id.bikeBrandName);
+        TextView bikeBrandName = convertView.findViewById(R.id.bikeBrandNameValue);
 
         bikeBrandId.setText(item.getId());
         bikeBrandName.setText(item.getName());
