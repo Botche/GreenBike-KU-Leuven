@@ -1,7 +1,6 @@
 package com.example.greenbike.adapters;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -10,27 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
-import com.example.greenbike.common.Messages;
-import com.example.greenbike.common.Global;
-import com.example.greenbike.database.common.Constatants;
 import com.example.greenbike.database.models.bike.Bike;
+import com.example.greenbike.database.services.BikeService;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class UserBikeAdapter extends ArrayAdapter<Bike> {
 
@@ -73,88 +58,14 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
             @Override
             public void onClick(View v) {
                 if (actionBikeButtonText.equals("Rent")) {
-                    UserBikeAdapter.this.onRentBike(v, item.getId());
+                    BikeService.rentBike(v, item.getId());
                 } else {
-                    UserBikeAdapter.this.onBuyBike(v, item.getId());
+                    BikeService.buyBike(v, item.getId());
                 }
 
             }
         });
 
         return convertView;
-    }
-
-    private void onBuyBike(View v, String bikeId) {
-        Activity origin = (Activity)this.getContext();
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.BUY_BIKE_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_user_home);
-                navController.navigate(R.id.navigation_for_buy);
-
-                Toast.makeText(origin, Messages.SUCCESSFULLY_BOUGHT_BIKE, Toast.LENGTH_LONG).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.BUY_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                UUID id = UUID.randomUUID();
-                LocalDateTime now = LocalDateTime.now();
-
-                Map<String, String> params = new HashMap<>();
-
-                params.put("id", id.toString());
-                params.put("userid", Global.currentUser.getId());
-                params.put("bikeid", bikeId);
-                params.put("buydate", Global.dateTimeFormatter.format(now));
-
-                return params;
-            }
-        };
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
-    }
-
-    private void onRentBike(View v, String bikeId) {
-        Activity origin = (Activity)this.getContext();
-
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constatants.RENT_BIKE_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_user_home);
-                navController.navigate(R.id.navigation_for_rent);
-
-                Toast.makeText(origin, Messages.SUCCESSFULLY_RENTED_BIKE, Toast.LENGTH_LONG).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.RENT_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                UUID id = UUID.randomUUID();
-                LocalDateTime now = LocalDateTime.now();
-                LocalDateTime nowPlusOneMonth = LocalDateTime.now().plusMonths(1);
-
-                Map<String, String> params = new HashMap<>();
-
-                params.put("id", id.toString());
-                params.put("userid", Global.currentUser.getId());
-                params.put("bikeid", bikeId);
-                params.put("rentstartdate", Global.dateTimeFormatter.format(now));
-                params.put("rentenddate", Global.dateTimeFormatter.format(nowPlusOneMonth));
-
-                return params;
-            }
-        };
-
-        Global.requestQueue.addToRequestQueue(submitRequest);
     }
 }
