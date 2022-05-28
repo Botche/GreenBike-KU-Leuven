@@ -8,7 +8,7 @@ public class Constants {
     public static final String REGISTER_USER = Constants.BASE_URL + "/register";
     public static final String LOGIN_USER = Constants.BASE_URL + "/login/%s";
 
-    public static String GET_ALL_USER_BIKES = Constants.BASE_URL + "/getAllUserBikes/%s";
+    public static final String GET_ALL_USER_BIKES = Constants.BASE_URL + "/getAllUserBikes/%s";
 
     public static final String GET_BRANDS_URL = Constants.BASE_URL + "/getAllBikeBrands";
     public static final String CREATE_BRAND_URL = Constants.BASE_URL + "/createBikeBrand";
