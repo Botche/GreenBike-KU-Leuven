@@ -67,11 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String requestUrl = String.format(Constants.LOGIN_USER, email);
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestUrl, null,
-            new Response.Listener<JSONArray>()
-            {
-                @Override
-                public void onResponse(JSONArray response)
-                {
+                response -> {
                     try {
                         if (Validator.checkIfResponseIsCorrect(response) == false) {
                             Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
@@ -115,16 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
-                }
-            },
-            new Response.ErrorListener()
-            {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
-                }
-            }
+                },
+                error -> Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show()
         );
 
         Global.requestQueue.addToRequestQueue(submitRequest);
@@ -133,36 +121,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private void getUserRoles() {
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_ALL_USER_ROLES, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
+                response -> {
+                    try {
+
+                        for (int index = 0; index < response.length(); index++) {
+                            JSONObject jsonObject = response.getJSONObject(index);
+
+                            Gson gson = new Gson();
+                            UserRole data = gson.fromJson(String.valueOf(jsonObject), UserRole.class);
+
+                            LoginActivity.this.userRoles.add(data);
+                        }
+                    }
+                    catch(JSONException e)
                     {
-                        try {
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                UserRole data = gson.fromJson(String.valueOf(jsonObject), UserRole.class);
-
-                                LoginActivity.this.userRoles.add(data);
-                            }
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
+                        Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
                 },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
-                    }
-                }
+                error -> Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show()
         );
 
         Global.requestQueue.addToRequestQueue(submitRequest);

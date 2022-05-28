@@ -28,12 +28,7 @@ public class MaterialsCreateFragment extends Fragment {
 
         Button createButton = root.findViewById(R.id.createBikeMaterialButton);
         createButton.setTag(root);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MaterialService.create(nameInput.getText().toString(), MaterialsCreateFragment.this.getActivity());
-            }
-        });
+        createButton.setOnClickListener(v -> MaterialService.create(nameInput.getText().toString(), MaterialsCreateFragment.this.getActivity()));
 
         return root;
     }

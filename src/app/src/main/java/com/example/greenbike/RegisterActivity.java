@@ -81,19 +81,11 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.REGISTER_USER,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(myIntent);
-                finish();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, Messages.REGISTER_FAILED, Toast.LENGTH_SHORT).show();
-            }
-        }) {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.REGISTER_USER, response -> {
+            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
+        }, error -> Toast.makeText(RegisterActivity.this, Messages.REGISTER_FAILED, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
