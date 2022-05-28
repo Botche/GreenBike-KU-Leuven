@@ -36,12 +36,7 @@ public class CategoriesEditFragment extends Fragment {
 
         Button editButton = root.findViewById(R.id.editActivityBikeCategoryButton);
         editButton.setTag(root);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CategoryService.update(nameInput.getText().toString(), bikeCategory.getId(), CategoriesEditFragment.this.getActivity());
-            }
-        });
+        editButton.setOnClickListener(v -> CategoryService.update(nameInput.getText().toString(), bikeCategory.getId(), CategoriesEditFragment.this.getActivity()));
 
         return root;
     }

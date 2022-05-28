@@ -35,13 +35,10 @@ public class BrandsFragment extends Fragment {
 
         Button createButton = root.findViewById(R.id.createBikeBrandPlusButton);
         createButton.setTag(root);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Activity origin = (Activity)root.getContext();
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_brands_create);
-            }
+        createButton.setOnClickListener(v -> {
+            Activity origin = (Activity)root.getContext();
+            NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_brands_create);
         });
 
         return this.root;

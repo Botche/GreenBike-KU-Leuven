@@ -28,12 +28,7 @@ public class BrandsCreateFragment extends Fragment {
 
         Button createButton = root.findViewById(R.id.createBikeBrandButton);
         createButton.setTag(root);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BrandService.create(nameInput.getText().toString(), BrandsCreateFragment.this.getActivity());
-            }
-        });
+        createButton.setOnClickListener(v -> BrandService.create(nameInput.getText().toString(), BrandsCreateFragment.this.getActivity()));
 
         return root;
     }

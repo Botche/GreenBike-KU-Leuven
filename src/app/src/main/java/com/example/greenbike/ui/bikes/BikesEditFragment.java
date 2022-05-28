@@ -77,20 +77,17 @@ public class BikesEditFragment extends Fragment {
 
         Button createButton = root.findViewById(R.id.editBikeButton);
         createButton.setTag(root);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = bike.getId();
-                String model = modelInput.getText().toString();
-                String imageURL = editBikeURLInput.getText().toString();
-                String isForRent = String.valueOf(isForRentInput.isChecked() ? 1 : 0);
-                String brandId = bikeBrandsSelectedIdInput.getText().toString();
-                String materialId = bikeMaterialsSelectedIdInput.getText().toString();
-                String categoryId = bikeCategoriesSelectedIdInput.getText().toString();
-                String price = priceInput.getText().toString();
+        createButton.setOnClickListener(v -> {
+            String id = bike.getId();
+            String model = modelInput.getText().toString();
+            String imageURL = editBikeURLInput.getText().toString();
+            String isForRent = String.valueOf(isForRentInput.isChecked() ? 1 : 0);
+            String brandId = bikeBrandsSelectedIdInput.getText().toString();
+            String materialId = bikeMaterialsSelectedIdInput.getText().toString();
+            String categoryId = bikeCategoriesSelectedIdInput.getText().toString();
+            String price = priceInput.getText().toString();
 
-                BikeService.update(id, model, imageURL, isForRent, brandId, materialId, categoryId, price, BikesEditFragment.this.getActivity());
-            }
+            BikeService.update(id, model, imageURL, isForRent, brandId, materialId, categoryId, price, BikesEditFragment.this.getActivity());
         });
 
         return root;
