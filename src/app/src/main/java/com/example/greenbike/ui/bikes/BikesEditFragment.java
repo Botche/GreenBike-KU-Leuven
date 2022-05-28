@@ -180,13 +180,13 @@ public class BikesEditFragment extends Fragment {
         return root;
     }
 
-    private int indexOfAdapter(ArrayAdapter adapter, BaseBike baseBike)
+    private int indexOfAdapter(ArrayAdapter<? extends BaseBike> adapter, BaseBike baseBike)
     {
         int indexOf = -1;
 
         for (int index = 0, count = adapter.getCount(); index < count; ++index)
         {
-            BaseBike baseBikeAdapterItem = (BaseBike)adapter.getItem(index);
+            BaseBike baseBikeAdapterItem = adapter.getItem(index);
 
             if (baseBikeAdapterItem.getId().equals(baseBike.getId()))
             {
