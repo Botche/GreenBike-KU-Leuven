@@ -40,18 +40,10 @@ public class CategoryService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.CREATE_CATEGORY_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_categories);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.CREATE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.CREATE_CATEGORY_URL, response -> {
+            NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_categories);
+        }, error -> Toast.makeText(origin, Messages.CREATE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
@@ -71,39 +63,27 @@ public class CategoryService {
         Activity origin = (Activity)root.getContext();
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
+                response -> {
+                    try {
+                        ArrayList<BikeCategory> allBikeCategories = new ArrayList<>();
+
+                        for (int index = 0; index < response.length(); index++) {
+                            JSONObject jsonObject = response.getJSONObject(index);
+
+                            Gson gson = new Gson();
+                            BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
+
+                            allBikeCategories.add(data);
+                        }
+
+                        callBackFunction.invoke(root, allBikeCategories, listId);
+                    }
+                    catch(JSONException e)
                     {
-                        try {
-                            ArrayList<BikeCategory> allBikeCategories = new ArrayList<>();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
-
-                                allBikeCategories.add(data);
-                            }
-
-                            callBackFunction.invoke(root, allBikeCategories, listId);
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
+                        Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
                 },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
+                error -> Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
         );
 
         Global.requestQueue.addToRequestQueue(submitRequest);
@@ -116,18 +96,10 @@ public class CategoryService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.EDIT_CATEGORY_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_categories);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.EDIT_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.EDIT_CATEGORY_URL, response -> {
+            NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_categories);
+        }, error -> Toast.makeText(origin, Messages.EDIT_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
 
@@ -143,18 +115,10 @@ public class CategoryService {
     }
 
     public static void delete(String id, Activity origin) {
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.DELETE_CATEGORY_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_categories);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.DELETE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.DELETE_CATEGORY_URL, response -> {
+            NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_categories);
+        }, error -> Toast.makeText(origin, Messages.DELETE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
