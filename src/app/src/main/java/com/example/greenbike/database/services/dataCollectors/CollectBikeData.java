@@ -58,7 +58,7 @@ public class CollectBikeData implements ICollectBikeData {
         this.getAllBikeBrands(root, BikeFilterOptions.All);
         this.getAllBikeCategories(root, BikeFilterOptions.All);
         this.getAllBikeMaterials(root, BikeFilterOptions.All);
-    };
+    }
 
     public void getAllData(View root, BikeFilterOptions filterOptions) {
         this.getAllBikeBrands(root, filterOptions);
