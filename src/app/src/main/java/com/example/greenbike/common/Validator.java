@@ -9,39 +9,29 @@ import java.util.regex.Pattern;
 public class Validator {
 
     public static boolean isEmailValid(String email){
-
         return Pattern.compile("^(.+)@(.+)\\.(.+)$").matcher(email).matches();
     }
 
     public static boolean isNullOrEmpty(String name) {
-        boolean isInvalid = name == null || name.isEmpty();
-
-        return isInvalid;
+        return name == null || name.isEmpty();
     }
 
     public static boolean checkCredentialsForLogin(JSONObject jsonObject, String password) throws JSONException {
         String userPassword = jsonObject.getString("password");
-        boolean isValid = Validator.equalsTo(userPassword, password);
 
-        return isValid;
+        return Validator.equalsTo(userPassword, password);
     }
 
     public static boolean checkIfResponseIsCorrect(JSONArray response) {
-        boolean isValid = response.length() == 1;
-
-        return isValid;
+        return response.length() == 1;
     }
 
     public static boolean isLowerThan(String text, Integer numberToCheck) {
-        boolean isLowerThan = text.length() < numberToCheck;
-
-        return isLowerThan;
+        return text.length() < numberToCheck;
     }
 
     public static boolean equalsTo(String firstString, String secondString) {
-        boolean areEqual = firstString.equals(secondString);
-
-        return areEqual;
+        return firstString.equals(secondString);
     }
 
 
