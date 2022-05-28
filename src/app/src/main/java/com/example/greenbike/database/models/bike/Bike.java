@@ -1,7 +1,5 @@
 package com.example.greenbike.database.models.bike;
 
-import android.graphics.Bitmap;
-
 import com.example.greenbike.database.models.BaseModel;
 
 public class Bike extends BaseModel {

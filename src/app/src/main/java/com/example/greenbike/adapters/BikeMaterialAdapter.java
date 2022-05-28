@@ -14,12 +14,11 @@ import android.widget.TextView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.greenbike.R;
 import com.example.greenbike.database.models.bike.BikeMaterial;
+import com.example.greenbike.database.services.MaterialService;
 
 import java.util.ArrayList;
-
-import com.example.greenbike.R;
-import com.example.greenbike.database.services.MaterialService;
 
 
 public class BikeMaterialAdapter extends ArrayAdapter<BikeMaterial> {

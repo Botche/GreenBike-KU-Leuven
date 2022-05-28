@@ -15,7 +15,6 @@ import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.services.BikeService;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public class UserBikeAdapter extends ArrayAdapter<Bike> {

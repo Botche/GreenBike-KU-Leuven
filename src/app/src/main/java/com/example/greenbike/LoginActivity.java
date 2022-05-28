@@ -1,7 +1,5 @@
 package com.example.greenbike;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,19 +8,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Global;
+import com.example.greenbike.common.Messages;
 import com.example.greenbike.common.Validator;
 import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.user.User;
 import com.example.greenbike.database.models.user.UserRole;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

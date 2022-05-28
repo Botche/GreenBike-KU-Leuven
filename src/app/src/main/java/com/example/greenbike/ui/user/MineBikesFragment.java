@@ -14,12 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.greenbike.R;
 import com.example.greenbike.adapters.UserBikeAdapter;
-import com.example.greenbike.common.BikeFilterOptions;
 import com.example.greenbike.common.Global;
 import com.example.greenbike.common.Messages;
 import com.example.greenbike.database.common.Constants;
@@ -32,7 +29,6 @@ import com.example.greenbike.database.services.BikeService;
 import com.example.greenbike.databinding.FragmentMineBikesBinding;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

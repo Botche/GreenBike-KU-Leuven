@@ -9,8 +9,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
@@ -21,7 +19,6 @@ import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.bike.BikeCategory;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
