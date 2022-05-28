@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
-    private final ArrayList<UserRole> userRoles = new ArrayList<UserRole>();
+    private final ArrayList<UserRole> userRoles = new ArrayList<>();
 
     private EditText emailInput;
     private EditText passwordInput;

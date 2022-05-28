@@ -172,7 +172,7 @@ public class BikeService {
         }, error -> Toast.makeText(origin, Messages.EDIT_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("id", id);
                 params.put("model", model);
                 params.put("brandid", brandId);
@@ -196,7 +196,7 @@ public class BikeService {
         }, error -> Toast.makeText(origin, Messages.DELETE_BIKE_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
 
                 params.put("id", id);
 

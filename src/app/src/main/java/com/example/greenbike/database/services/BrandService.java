@@ -45,7 +45,7 @@ public class BrandService {
             protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("id", id.toString());
                 params.put("name", name);
 

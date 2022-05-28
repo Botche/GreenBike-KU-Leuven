@@ -159,7 +159,7 @@ public class BikesEditFragment extends Fragment {
 
         Spinner bikeCategoriesSelect = root.findViewById(R.id.spinnerBikeCategoriesEdit);
 
-        ArrayAdapter<BikeCategory> adapter = new ArrayAdapter<BikeCategory>(context, simpleSpinnerDropdownItemId, items);
+        ArrayAdapter<BikeCategory> adapter = new ArrayAdapter<>(context, simpleSpinnerDropdownItemId, items);
         adapter.setDropDownViewResource(simpleSpinnerDropdownItemId);
         bikeCategoriesSelect.setAdapter(adapter);
 
