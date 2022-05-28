@@ -63,14 +63,14 @@ public class LoginActivity extends AppCompatActivity {
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestUrl, null,
                 response -> {
                     try {
-                        if (Validator.checkIfResponseIsCorrect(response) == false) {
+                        if (!Validator.checkIfResponseIsCorrect(response)) {
                             Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;
                         }
 
                         JSONObject jsonObject = response.getJSONObject(0);
-                        if (Validator.checkCredentialsForLogin(jsonObject, password) == false) {
+                        if (!Validator.checkCredentialsForLogin(jsonObject, password)) {
                             Toast.makeText(LoginActivity.this, Messages.INVALID_CREDENTIALS, Toast.LENGTH_SHORT).show();
 
                             return;

@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if (Validator.isEmailValid(email) == false) {
+        if (!Validator.isEmailValid(email)) {
             Toast.makeText(RegisterActivity.this, Messages.NOT_VALID_EMAIL,
                     Toast.LENGTH_SHORT).show();
 
