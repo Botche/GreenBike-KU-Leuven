@@ -35,13 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
         this.repeatPasswordInput = findViewById(R.id.repeatPassword);
 
         TextView loginLink = findViewById(R.id.loginLink);
-        loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(myIntent);
-                finish();
-            }
+        loginLink.setOnClickListener(v -> {
+            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
         });
     }
 
