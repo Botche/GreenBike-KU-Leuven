@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class UserBikeAdapter extends ArrayAdapter<Bike> {
 
-    public UserBikeAdapter(Context context, ArrayList<Bike> items) {
-        super(context, 0, items);
+    public UserBikeAdapter(Context context) {
+        super(context, 0, new ArrayList<>());
     }
 
     @Override
