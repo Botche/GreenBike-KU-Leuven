@@ -104,7 +104,7 @@ public class BikesEditFragment extends Fragment {
 
     public View fillBikeBrandsFragments(View root, ArrayList<BikeBrand> bikeBrands, Integer simpleSpinnerDropdownItemId) {
         Context context = root.getContext();
-        final BikeBrand items[] = bikeBrands.toArray(new BikeBrand[0]);
+        final BikeBrand[] items = bikeBrands.toArray(new BikeBrand[0]);
 
         Spinner bikeBrandsSelect = root.findViewById(R.id.spinnerBikeBrandsEdit);
 
@@ -131,7 +131,7 @@ public class BikesEditFragment extends Fragment {
 
     public View fillBikeMaterialsFragments(View root, ArrayList<BikeMaterial> bikeMaterials, Integer simpleSpinnerDropdownItemId) {
         Context context = root.getContext();
-        final BikeMaterial items[] = bikeMaterials.toArray(new BikeMaterial[0]);
+        final BikeMaterial[] items = bikeMaterials.toArray(new BikeMaterial[0]);
 
         Spinner bikeMaterialsSelect = root.findViewById(R.id.spinnerBikeMaterialsEdit);
 
@@ -158,7 +158,7 @@ public class BikesEditFragment extends Fragment {
 
     public View fillBikeCategoriesFragments(View root, ArrayList<BikeCategory> bikeCategories, Integer simpleSpinnerDropdownItemId) {
         Context context = root.getContext();
-        final BikeCategory items[] = bikeCategories.toArray(new BikeCategory[0]);
+        final BikeCategory[] items = bikeCategories.toArray(new BikeCategory[0]);
 
         Spinner bikeCategoriesSelect = root.findViewById(R.id.spinnerBikeCategoriesEdit);
 
