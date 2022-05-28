@@ -21,7 +21,6 @@ import com.example.greenbike.database.common.Constants;
 import com.example.greenbike.database.models.bike.BikeBrand;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,18 +39,10 @@ public class BrandService {
             return;
         }
 
-        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.CREATE_BRAND_URL,  new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.nav_brands);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(origin, Messages.CREATE_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-            }
-        }) {
+        StringRequest submitRequest = new StringRequest (Request.Method.POST, Constants.CREATE_BRAND_URL, response -> {
+            NavController navController = Navigation.findNavController(origin, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_brands);
+        }, error -> Toast.makeText(origin, Messages.CREATE_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
@@ -110,7 +101,7 @@ public class BrandService {
             @Override
             protected Map<String, String> getParams() {
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("id", id);
                 params.put("name", name);
 
@@ -128,7 +119,7 @@ public class BrandService {
         }, error -> Toast.makeText(origin, Messages.DELETE_BRAND_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
 
                 params.put("id", id);
 

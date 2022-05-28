@@ -9,8 +9,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.greenbike.R;
@@ -23,7 +21,6 @@ import com.example.greenbike.database.models.bike.Bike;
 import com.example.greenbike.database.models.mapping.UserBikeMapping;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,7 +52,7 @@ public class BikeService {
             protected Map<String, String> getParams() {
                 UUID id = UUID.randomUUID();
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("id", id.toString());
                 params.put("model", model);
                 params.put("brandid", brandId);

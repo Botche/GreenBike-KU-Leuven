@@ -103,7 +103,7 @@ public class CategoryService {
             @Override
             protected Map<String, String> getParams() {
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("id", id);
                 params.put("name", name);
 
@@ -121,7 +121,7 @@ public class CategoryService {
         }, error -> Toast.makeText(origin, Messages.DELETE_CATEGORY_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
 
                 params.put("id", id);
 
