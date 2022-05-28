@@ -17,13 +17,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserHomeActivity extends AppCompatActivity {
 
-    private ActivityUserHomeBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityUserHomeBinding.inflate(getLayoutInflater());
+        ActivityUserHomeBinding binding = ActivityUserHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

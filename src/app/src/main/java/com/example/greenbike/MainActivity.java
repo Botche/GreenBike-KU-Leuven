@@ -19,13 +19,12 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
   
     private AppBarConfiguration mAppBarConfiguration;
-    private MainScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = MainScreenBinding.inflate(getLayoutInflater());
+        MainScreenBinding binding = MainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
