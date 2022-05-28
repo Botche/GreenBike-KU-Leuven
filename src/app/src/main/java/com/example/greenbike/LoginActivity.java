@@ -45,13 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         this.getUserRoles();
 
         TextView registerLink = findViewById(R.id.registerLink);
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(myIntent);
-                finish();
-            }
+        registerLink.setOnClickListener(v -> {
+            Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(myIntent);
+            finish();
         });
     }
 

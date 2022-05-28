@@ -96,45 +96,33 @@ public class BuyBikesFragment extends Fragment {
         Activity origin = (Activity)this.getContext();
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_BRANDS_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
+                response -> {
+                    try {
+                        bikeBrands.clear();
+
+                        for (int index = 0; index < response.length(); index++) {
+                            JSONObject jsonObject = response.getJSONObject(index);
+
+                            Gson gson = new Gson();
+                            BikeBrand data = gson.fromJson(String.valueOf(jsonObject), BikeBrand.class);
+
+                            bikeBrands.add(data);
+                        }
+
+                        boolean isDataReady = bikeBrands.size() != 0 &&
+                                bikeMaterials.size() != 0 &&
+                                bikeCategories.size() != 0;
+
+                        if (isDataReady) {
+                            BikeService.getAll(BikeFilterOptions.Buy, root, R.id.buyBikesList, BuyBikesFragment::fillFragments);
+                        }
+                    }
+                    catch(JSONException e)
                     {
-                        try {
-                            bikeBrands.clear();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                BikeBrand data = gson.fromJson(String.valueOf(jsonObject), BikeBrand.class);
-
-                                bikeBrands.add(data);
-                            }
-
-                            boolean isDataReady = bikeBrands.size() != 0 &&
-                                    bikeMaterials.size() != 0 &&
-                                    bikeCategories.size() != 0;
-
-                            if (isDataReady) {
-                                BikeService.getAll(BikeFilterOptions.Buy, root, R.id.buyBikesList, BuyBikesFragment::fillFragments);
-                            }
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
+                        Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
                 },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
+                error -> Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
         );
 
         Global.requestQueue.addToRequestQueue(submitRequest);
@@ -144,45 +132,33 @@ public class BuyBikesFragment extends Fragment {
         Activity origin = (Activity)this.getContext();
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_MATERIALS_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
+                response -> {
+                    try {
+                        bikeMaterials.clear();
+
+                        for (int index = 0; index < response.length(); index++) {
+                            JSONObject jsonObject = response.getJSONObject(index);
+
+                            Gson gson = new Gson();
+                            BikeMaterial data = gson.fromJson(String.valueOf(jsonObject), BikeMaterial.class);
+
+                            bikeMaterials.add(data);
+                        }
+
+                        boolean isDataReady = bikeBrands.size() != 0 &&
+                                bikeMaterials.size() != 0 &&
+                                bikeCategories.size() != 0;
+
+                        if (isDataReady) {
+                            BikeService.getAll(BikeFilterOptions.Buy, root, R.id.buyBikesList, BuyBikesFragment::fillFragments);
+                        }
+                    }
+                    catch(JSONException e)
                     {
-                        try {
-                            bikeMaterials.clear();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                BikeMaterial data = gson.fromJson(String.valueOf(jsonObject), BikeMaterial.class);
-
-                                bikeMaterials.add(data);
-                            }
-
-                            boolean isDataReady = bikeBrands.size() != 0 &&
-                                    bikeMaterials.size() != 0 &&
-                                    bikeCategories.size() != 0;
-
-                            if (isDataReady) {
-                                BikeService.getAll(BikeFilterOptions.Buy, root, R.id.buyBikesList, BuyBikesFragment::fillFragments);
-                            }
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
+                        Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
                 },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
+                error -> Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
         );
 
         Global.requestQueue.addToRequestQueue(submitRequest);
@@ -192,45 +168,33 @@ public class BuyBikesFragment extends Fragment {
         Activity origin = (Activity)this.getContext();
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, null,
-                new Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response)
+                response -> {
+                    try {
+                        bikeCategories.clear();
+
+                        for (int index = 0; index < response.length(); index++) {
+                            JSONObject jsonObject = response.getJSONObject(index);
+
+                            Gson gson = new Gson();
+                            BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
+
+                            bikeCategories.add(data);
+                        }
+
+                        boolean isDataReady = bikeBrands.size() != 0 &&
+                                bikeMaterials.size() != 0 &&
+                                bikeCategories.size() != 0;
+
+                        if (isDataReady) {
+                            BikeService.getAll(BikeFilterOptions.Buy, root, R.id.buyBikesList, BuyBikesFragment::fillFragments);
+                        }
+                    }
+                    catch(JSONException e)
                     {
-                        try {
-                            bikeCategories.clear();
-
-                            for (int index = 0; index < response.length(); index++) {
-                                JSONObject jsonObject = response.getJSONObject(index);
-
-                                Gson gson = new Gson();
-                                BikeCategory data = gson.fromJson(String.valueOf(jsonObject), BikeCategory.class);
-
-                                bikeCategories.add(data);
-                            }
-
-                            boolean isDataReady = bikeBrands.size() != 0 &&
-                                    bikeMaterials.size() != 0 &&
-                                    bikeCategories.size() != 0;
-
-                            if (isDataReady) {
-                                BikeService.getAll(BikeFilterOptions.Buy, root, R.id.buyBikesList, BuyBikesFragment::fillFragments);
-                            }
-                        }
-                        catch(JSONException e)
-                        {
-                            Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
-                        }
+                        Log.e(Messages.DATABASE_ERROR_TAG, e.getMessage(), e);
                     }
                 },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
-                    }
-                }
+                error -> Toast.makeText(origin, Messages.ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
         );
 
         Global.requestQueue.addToRequestQueue(submitRequest);
