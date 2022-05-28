@@ -90,8 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Global.currentUser = user;
 
-                        Class activityToRedirect = UserHomeActivity.class;
-
+                        Class<? extends AppCompatActivity> activityToRedirect = UserHomeActivity.class;
                         if (user.getUserRole().getName().equals(Constants.ADMIN_ROLE)) {
                             activityToRedirect =  MainActivity.class;
                         }
