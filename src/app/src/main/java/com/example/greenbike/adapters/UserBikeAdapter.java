@@ -59,18 +59,15 @@ public class UserBikeAdapter extends ArrayAdapter<Bike> {
             String actionBikeButtonText = item.getTaken() ? "Return" : item.getIsForRent() ? "Rent" : "Buy";
             actionBikeButton.setText(actionBikeButtonText);
             actionBikeButton.setVisibility(View.VISIBLE);
-            actionBikeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (item.getTaken()) {
-                        BikeService.returnBike(v, item.getId());
-                    } else if(actionBikeButtonText.equals("Rent")) {
-                        BikeService.rentBike(v, item.getId());
-                    } else {
-                        BikeService.buyBike(v, item.getId());
-                    }
-
+            actionBikeButton.setOnClickListener(v -> {
+                if (item.getTaken()) {
+                    BikeService.returnBike(v, item.getId());
+                } else if(actionBikeButtonText.equals("Rent")) {
+                    BikeService.rentBike(v, item.getId());
+                } else {
+                    BikeService.buyBike(v, item.getId());
                 }
+
             });
         }
 

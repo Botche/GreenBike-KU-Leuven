@@ -58,21 +58,11 @@ public class BikeAdapter extends ArrayAdapter<Bike> {
 
         Button deleteButton = convertView.findViewById(R.id.deleteBikeItemButton);
         deleteButton.setTag(position);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BrandService.delete(item.getId(), (Activity)BikeAdapter.this.getContext());
-            }
-        });
+        deleteButton.setOnClickListener(v -> BrandService.delete(item.getId(), (Activity)BikeAdapter.this.getContext()));
 
         Button editButton = convertView.findViewById(R.id.editBikeItemButton);
         editButton.setTag(position);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BikeAdapter.this.onEditBike(v, item);
-            }
-        });
+        editButton.setOnClickListener(v -> BikeAdapter.this.onEditBike(v, item));
 
         return convertView;
     }
