@@ -24,12 +24,7 @@ import java.util.ArrayList;
 
 public class MaterialsFragment extends Fragment {
     private FragmentMaterialsBinding binding;
-    private final ArrayList<BikeMaterial> allBikeMaterials;
     private View root;
-
-    public MaterialsFragment() {
-        this.allBikeMaterials = new ArrayList<BikeMaterial>();
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
