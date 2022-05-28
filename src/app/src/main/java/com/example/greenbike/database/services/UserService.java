@@ -10,26 +10,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class UserService {
 
-    public User create(User entity) {
-        return null;
-    }
-
-    public User getById(String id) {
-        return null;
-    }
-
-    public List<User> getAll() {
-        return null;
-    }
-
-    public User update(User entity) {
-        return null;
-    }
-
-    public void delete(String id) {
-
-    }
-
     private String hashPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
