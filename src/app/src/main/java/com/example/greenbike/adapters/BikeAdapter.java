@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.example.greenbike.R;
 import com.example.greenbike.database.models.bike.Bike;
+import com.example.greenbike.database.services.BikeService;
 import com.example.greenbike.database.services.BrandService;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -58,7 +59,7 @@ public class BikeAdapter extends ArrayAdapter<Bike> {
 
         Button deleteButton = convertView.findViewById(R.id.deleteBikeItemButton);
         deleteButton.setTag(position);
-        deleteButton.setOnClickListener(v -> BrandService.delete(item.getId(), (Activity)BikeAdapter.this.getContext()));
+        deleteButton.setOnClickListener(v -> BikeService.delete(item.getId(), (Activity)BikeAdapter.this.getContext()));
 
         Button editButton = convertView.findViewById(R.id.editBikeItemButton);
         editButton.setTag(position);
